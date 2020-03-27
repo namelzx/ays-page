@@ -7,7 +7,8 @@ thinkphp
 .DS_Store
 node_modules/
 /dist/
-npm-debug.log*
+
 carcopy/node_modules/*
+
 sys/node_modules/*
 yewu/node_modules/*
