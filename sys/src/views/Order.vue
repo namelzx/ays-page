@@ -173,18 +173,21 @@
         },
         created() {
             this.listQuery.openid = this.userInfo.openid === undefined ? 'kong' : this.userInfo.openid;
-            if (this.listQuery.openid === 'kong') {
-                this.$router.push('/login'); // 动态跳转
-            }
-            if (this.userInfo.tel === '') {
-                this.$router.push('/login'); // 动态跳转
-            }
+            // if (this.listQuery.openid === 'kong') {
+            //     this.$router.push('/login'); // 动态跳转
+            // }
+            // if (this.userInfo.tel === '') {
+            //     this.$router.push('/login'); // 动态跳转
+            // }
+            console.log(this.$route.params.id )
+            getInfo(this.$route.params.id ).then(res=>{
+                this.listQuery.openid=res.data.openid
+                this.getlist()
+            })
             this.getlist()
-
             if (this.$route.query.num == 1) {
                 this.num = this.$route.query.num;
             }
-
         }
     };
 </script>

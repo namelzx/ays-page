@@ -1,5 +1,7 @@
 module.exports = {
     //使用rem自适应 npm i --save-dev postcss-px2rem
+    publicPath: './',
+    outputDir: 'salesman',
     css: {
       loaderOptions: {
         sass:{

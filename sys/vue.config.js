@@ -1,4 +1,6 @@
 module.exports = {
+    publicPath: './',
+    outputDir: 'members',
     //使用rem自适应 npm i --save-dev postcss-px2rem
     css: {
       loaderOptions: {
