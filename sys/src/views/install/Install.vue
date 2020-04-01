@@ -295,6 +295,10 @@ export default {
     ...mapGetters(["userInfo"])
   },
   created() {
+    document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
+      // 通过下面这个API隐藏底部导航栏
+      WeixinJSBridge.call("hideToolbar");
+    });
     Citylist(1).then(res => {
       this.areaJson = res.data;
     });

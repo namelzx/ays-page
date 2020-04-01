@@ -8,7 +8,7 @@
       <div class="user-avatar">
         <img :src="userinfo.headimgurl" alt />
       </div>
-      <div class="user-name">{{userinfo.nickname}}</div>
+      <div class="user-name">{{ userinfo.nickname }}</div>
     </div>
     <div class="apply-info">
       <!--  门店名称  -->
@@ -17,15 +17,23 @@
         <div class="name-right">
           <div class="right-input">
             <input v-model="temp.shopname" placeholder="请输入门店全称" />
-            <div class="hint-icon" v-if="temp.shopname!==''">
-              <img v-if="temp.shopname!=='阿帕旗舰店'" src="../../assets/correct.png" />
-              <img v-if="temp.shopname=='阿帕旗舰店'" src="../../assets/mistake.png" />
+            <div class="hint-icon" v-if="temp.shopname !== ''">
+              <img
+                v-if="temp.shopname !== '阿帕旗舰店'"
+                src="../../assets/correct.png"
+              />
+              <img
+                v-if="temp.shopname == '阿帕旗舰店'"
+                src="../../assets/mistake.png"
+              />
             </div>
           </div>
           <div class="right-hint">
-            <span v-if="temp.shopname===''">名称若被占用,如是分店请加上地区,例如阿帕改灯（广州）</span>
+            <span v-if="temp.shopname === ''"
+              >名称若被占用,如是分店请加上地区,例如阿帕改灯（广州）</span
+            >
             <span v-if="!checkUser">*此名称已被使用，请重新检查</span>
-            <span v-if="checkUser || temp.shopname!==''">*此名称可使用</span>
+            <span v-if="checkUser || temp.shopname !== ''">*此名称可使用</span>
           </div>
         </div>
       </div>
@@ -35,7 +43,7 @@
         <div class="location-title">门店地址</div>
         <div class="location-right">
           <div class="right-city" @click="toggleAddr">
-            <div class="city-name">{{temp.cityName}}</div>
+            <div class="city-name">{{ temp.cityName }}</div>
             <div class="city-icon">
               <img src="../../assets/below.png" />
             </div>
@@ -74,25 +82,45 @@
       <div class="shop-font-license">
         <div class="shop-font">
           <p>门店正面照片</p>
-          <Upload :front="front" :count="1" @handelUploade="afterFront"></Upload>
+          <Upload
+            :front="front"
+            :count="1"
+            @handelUploade="afterFront"
+          ></Upload>
         </div>
 
         <div class="shop-license">
           <p>营业执照</p>
-          <Upload :front="license" :count="1" @handelUploade="afterLicense"></Upload>
+          <Upload
+            :front="license"
+            :count="1"
+            @handelUploade="afterLicense"
+          ></Upload>
         </div>
       </div>
     </div>
-    <div class="action-btn">
+    <div class="action-btn" v-show="hideshow">
       <div class="cancel-btn" @click="toggleRetun">取消</div>
-      <div class="confirm-btn" @click="toggledata" v-if="temp.status===2">重新提交</div>
-      <div class="confirm-btn" @click="toggledata" v-else-if="temp.status===1">等待处理</div>
+      <div class="confirm-btn" @click="toggledata" v-if="temp.status === 2">
+        重新提交
+      </div>
+      <div
+        class="confirm-btn"
+        @click="toggledata"
+        v-else-if="temp.status === 1"
+      >
+        等待处理
+      </div>
       <div class="confirm-btn" @click="toggledata" v-else>提交申请</div>
     </div>
     <!--弹出层-->
     <!--<van-popup v-model="showAddr" position="bottom">-->
-    {{showAddr}}
-    <Address v-if="showAddr" :areaJson="areaJson" @toggleAddress="pickAddr"></Address>
+    {{ showAddr }}
+    <Address
+      v-if="showAddr"
+      :areaJson="areaJson"
+      @toggleAddress="pickAddr"
+    ></Address>
     <!--<van-area :area-list="areaList" :value="temp.cityCode" @confirm="pickAddr" @cancel="toggleAddr"/>-->
     <!--</van-popup>-->
     <!--  弹出重新填写  -->
@@ -107,7 +135,7 @@
         </div>
         <div class="an-bottom" style="margin-top: 2rem">
           <div class="title">
-            <span class="title-s">{{redesc}}</span>
+            <span class="title-s">{{ redesc }}</span>
             <span class="title-x">请重填</span>
           </div>
           <div class="btnfill" @click="clickAnew">重新填写</div>
@@ -126,7 +154,7 @@
         </div>
         <div class="an-bottom">
           <div class="title">
-            <span class="title-s">{{redesc}}</span>
+            <span class="title-s">{{ redesc }}</span>
             <span class="title-x">请勿重复提交</span>
           </div>
 
@@ -156,6 +184,9 @@ export default {
   name: "AddShop",
   data() {
     return {
+      docmHeight: document.documentElement.clientHeight, //默认屏幕高度
+      showHeight: document.documentElement.clientHeight, //实时屏幕高度
+      hideshow: true, //显示或者隐藏bm
       homeshow: false,
       areaJson: [],
       auditshow: false,
@@ -190,6 +221,15 @@ export default {
   },
   computed: {
     ...mapGetters(["userInfo", "sele_shop"])
+  },
+  mounted() {
+    // window.onresize监听页面高度的变化
+    //安卓输入框顶起底部按钮解决
+    window.onresize = () => {
+      return (() => {
+        this.showHeight = document.documentElement.clientHeight;
+      })();
+    };
   },
   created() {
     var that = this;
@@ -300,10 +340,19 @@ export default {
     Toptitle,
     Upload,
     Address
+  },
+  watch: {
+    //安卓输入框顶起底部按钮解决
+    showHeight: function() {
+      if (this.docmHeight > this.showHeight) {
+        this.hideshow = false;
+      } else {
+        this.hideshow = true;
+      }
+    }
   }
 };
 </script>
-
 
 <!--background url("https://kedand.oss-cn-beijing.aliyuncs.com/uploads/add.png")-->
 
