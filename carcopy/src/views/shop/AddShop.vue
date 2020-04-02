@@ -18,20 +18,12 @@
           <div class="right-input">
             <input v-model="temp.shopname" placeholder="请输入门店全称" />
             <div class="hint-icon" v-if="temp.shopname !== ''">
-              <img
-                v-if="temp.shopname !== '阿帕旗舰店'"
-                src="../../assets/correct.png"
-              />
-              <img
-                v-if="temp.shopname == '阿帕旗舰店'"
-                src="../../assets/mistake.png"
-              />
+              <img v-if="temp.shopname !== '阿帕旗舰店'" src="../../assets/correct.png" />
+              <img v-if="temp.shopname == '阿帕旗舰店'" src="../../assets/mistake.png" />
             </div>
           </div>
           <div class="right-hint">
-            <span v-if="temp.shopname === ''"
-              >名称若被占用,如是分店请加上地区,例如阿帕改灯（广州）</span
-            >
+            <span v-if="temp.shopname === ''">名称若被占用,如是分店请加上地区,例如阿帕改灯（广州）</span>
             <span v-if="!checkUser">*此名称已被使用，请重新检查</span>
             <span v-if="checkUser || temp.shopname !== ''">*此名称可使用</span>
           </div>
@@ -82,45 +74,25 @@
       <div class="shop-font-license">
         <div class="shop-font">
           <p>门店正面照片</p>
-          <Upload
-            :front="front"
-            :count="1"
-            @handelUploade="afterFront"
-          ></Upload>
+          <Upload :front="front" :count="1" @handelUploade="afterFront"></Upload>
         </div>
 
         <div class="shop-license">
           <p>营业执照</p>
-          <Upload
-            :front="license"
-            :count="1"
-            @handelUploade="afterLicense"
-          ></Upload>
+          <Upload :front="license" :count="1" @handelUploade="afterLicense"></Upload>
         </div>
       </div>
     </div>
     <div class="action-btn" v-show="hideshow">
       <div class="cancel-btn" @click="toggleRetun">取消</div>
-      <div class="confirm-btn" @click="toggledata" v-if="temp.status === 2">
-        重新提交
-      </div>
-      <div
-        class="confirm-btn"
-        @click="toggledata"
-        v-else-if="temp.status === 1"
-      >
-        等待处理
-      </div>
+      <div class="confirm-btn" @click="toggledata" v-if="temp.status === 2">重新提交</div>
+      <div class="confirm-btn" @click="toggledata" v-else-if="temp.status === 1">等待处理</div>
       <div class="confirm-btn" @click="toggledata" v-else>提交申请</div>
     </div>
     <!--弹出层-->
     <!--<van-popup v-model="showAddr" position="bottom">-->
-    {{ showAddr }}
-    <Address
-      v-if="showAddr"
-      :areaJson="areaJson"
-      @toggleAddress="pickAddr"
-    ></Address>
+
+    <Address v-if="showAddr" :areaJson="areaJson" @toggleAddress="pickAddr"></Address>
     <!--<van-area :area-list="areaList" :value="temp.cityCode" @confirm="pickAddr" @cancel="toggleAddr"/>-->
     <!--</van-popup>-->
     <!--  弹出重新填写  -->
@@ -230,6 +202,10 @@ export default {
         this.showHeight = document.documentElement.clientHeight;
       })();
     };
+    document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
+      // 通过下面这个API隐藏底部导航栏
+      WeixinJSBridge.call("hideToolbar");
+    });
   },
   created() {
     var that = this;
@@ -323,13 +299,20 @@ export default {
       }
       this.temp.front = this.front[0].url;
       //   this.temp.license = this.license[0].url;
-      this.temp.status = 1;
+
       var postFrom = {
         imglist: this.fileList,
         from: this.temp
       };
+      this.temp.status = 1;
       PostDataAdd(postFrom).then(res => {
-        this.$router.push("/addshop-data"); // 动态跳转
+        console.log(res.code);
+        if (res.code === 10001) {
+          Toast(res.msg);
+          this.temp.status = "";
+        } else {
+          this.$router.push("/addshop-data"); // 动态跳转
+        }
       });
     },
     clickAnew() {
