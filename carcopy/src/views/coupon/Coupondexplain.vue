@@ -9,7 +9,7 @@
         <div class="explain">
             <!--<div class="explain_title">使用说明</div>-->
             <div class="explain_desc">
-                此优惠券为单品使用，只能使用一次，不可叠加此优惠券为单品使用，只能使用一次，不可叠加此优惠券为单品使用，只能使用一次，不可叠加此优惠券为单品使用，只能使用一次，不可叠加
+             {{desc}}
             </div>
         </div>
 
@@ -21,8 +21,12 @@ export default {
     name:'CoupondExplain',
     data() {
         return {
-            title: "优惠券使用说明"
+            title: "优惠券使用说明",
+            desc:''
         }
+    },
+    created(){
+      this.desc=this.$route.query.data
     },
     methods:{
         toggleRetun() {

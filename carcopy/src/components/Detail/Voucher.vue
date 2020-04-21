@@ -36,20 +36,20 @@
 <script>
 import Toptitle from "@/components/Toptitle/Toptitle";
 import axios from 'axios'
-import {Toast} from 'vuex'
 import {GetShopIdByInfo} from "@/api/shop";
 
 import myconfig from "@/config";
 import {getUser, removeUser, setUser} from '@/utils/auth'
 import {GetIdBydetails,PostNoteByAdd,GetIdByStatus} from "@/api/order";
 import {getInfo, login} from '@/api/user'
-
+import { Toast } from 'vant';
 export default {
   name: "Voucher",
   data() {
     return {
       title: "确认安装",
       fileList: [],
+        is_send:true,
         postFrom:{
             credentials:'',
             status:4,
@@ -109,13 +109,24 @@ export default {
       this.$router.go(-1);//返回上一层
     },
     toggleInstall() {
+          console.log('12')
       if (this.postFrom.credentials !== "") {
+          console.log('33')
+          if(!this.is_send){
+              return true
+          }
+          this.is_send=false
           GetIdByStatus(this.postFrom).then(res=>{
-              this.$router.push({ path: "/install", query: { id: 3 } });
+              if(res.code===20000){
+                  this.$router.push({ path: "/install", query: { id: 3 } });
+              }else{
+                  Toast(res.msg);
+              }
 
           })
       }else{
-          Toast('凭证上传中..请稍后提交');
+          // console.log('12',3)
+          Toast('请检查,凭证是否上传');
       }
     }
   }

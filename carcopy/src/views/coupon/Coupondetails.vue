@@ -6,9 +6,9 @@
     <div class="coudeBox">
       <div class="face">
         <div class="face-nominal">
-          100元
+          {{data.price}}元
         </div>
-        <div class="face-desc">无金额限制，仅限阿帕阿帕品牌使用</div>
+        <div class="face-desc">{{data.title}}</div>
       </div>
       <!-- 使用部分  -->
       <div class="state">
@@ -19,10 +19,10 @@
               <span>核销码</span>
             </div>
             <div class="code-right">
-              <div class="right-nums">987654123654</div>
+              <div class="right-nums">{{data.code}}</div>
               <div
                 class="right-copy"
-                v-clipboard:copy="987654123654"
+                v-clipboard:copy="data.code"
                 v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
               >快速复制</div>
@@ -49,7 +49,7 @@
           <!-- 有效期 -->
           <div class="set-data">
             <div class="data-title">有效期至</div>
-            <div class="data-time">2019.12.12-2019.12.30</div>
+            <div class="data-time">{{data.start_time|parseTime('{y}-{m}-{d}')}}-{{data.end_time|parseTime('{y}-{m}-{d}')}}</div>
           </div>
 
 
@@ -65,16 +65,58 @@ export default {
   name: "Coupondetails",
   data() {
     return {
-      title: "优惠券详情"
+      title: "优惠券详情",
+        data:{}
     };
   },
+    filters:{
+        parseTime(time, cFormat) {
+            if (arguments.length === 0) {
+                return null
+            }
+            if (!time) {
+                return null
+            }
+            const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+            let date
+            if (typeof time === 'object') {
+                date = time
+            } else {
+                if (('' + time).length === 10) time = parseInt(time) * 1000
+                date = new Date(time)
+            }
+            const formatObj = {
+                y: date.getFullYear(),
+                m: date.getMonth() + 1,
+                d: date.getDate(),
+                h: date.getHours(),
+                i: date.getMinutes(),
+                s: date.getSeconds(),
+                a: date.getDay()
+            }
+            const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+                let value = formatObj[key]
+                // Note: getDay() returns 0 on Sunday
+                if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+                if (result.length > 0 && value < 10) {
+                    value = '0' + value
+                }
+                return value || 0
+            })
+            return time_str
+        }
+    },
+    created(){
+      var data=JSON.stringify(this.$route.query.data)
+        this.data=JSON.parse(data)
+    },
   methods:{
     toggleRetun() {
       this.$router.go(-1); //返回上一层
     },
     //使用说明
     toggleExplain() {
-      this.$router.push({path:'/coupon/coupondexplain'})
+      this.$router.push({path:'/coupon/coupondexplain', query: {data: this.data.desc}})
     },
       onCopy: function(e) {
       this.$dialog.alert({

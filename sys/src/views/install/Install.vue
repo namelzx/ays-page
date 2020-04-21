@@ -203,7 +203,7 @@
       </div>
     </div>
 
-    <div class="bm" v-if="!opneCars&&!showAddress" v-show="hideshow">
+    <div class="bm" v-if="!opneCars&&!showAddress">
       <div class="post-btn" @click="clickToPost">提交</div>
     </div>
   </div>
@@ -952,6 +952,7 @@ export default {
   }
 }
 .post-btn {
+
   width: 9.01rem;
   height: 1.09rem;
   border-radius: 0.55rem;
@@ -966,6 +967,7 @@ export default {
   margin-top: 0.2rem;
 
   margin-left: 0.49rem;
+  z-index: auto;
 }
 .bm {
   position: fixed;

@@ -5,7 +5,7 @@
                 <Toptitle :title="title"/>
             </div>
             <div class="search-bill" @click="tosearch('/bill/billsearch')">
-                <img  class="11" @click="tosearch('/bill/billsearch')" src="@/assets/sou.png"/>
+                <img class="11" @click="tosearch('/bill/billsearch')" src="@/assets/sou.png"/>
             </div>
         </div>
 
@@ -25,64 +25,72 @@
                 </div>
             </div>
 
-        <div class="bill-list">
-            <div class="list-item border-bottom" v-for="(item,index) in list" @click="togowitg(item)">
-                <div class="item-left">
-                    <p v-if="item.pay_type===1">
-                        {{item.cost_title}}
-                    </p>
-                    <p v-if="item.pay_type===2">余额提现</p>
-                    <p>{{item.title}}</p>
-                    <p>{{item.create_time}}</p>
-                </div>
-                <div class="item-right">
-                    <p class="in" v-if="item.price_type===1"><span>+</span><span>{{item.price}}</span></p>
-                    <p class="out" v-else><span>-</span><span>{{item.price}}</span></p>
-                    <p><span>余额{{item.balance}}</span></p>
-                </div>
-            </div>
+            <div class="bill-list">
+                <div class="list-item border-bottom" v-for="(item,index) in list" @click="togowitg(item)">
+                    <div class="item-left">
+                        <p v-if="item.pay_type===1">
+                            {{item.cost_title}}
+                        </p>
+                        <p v-if="item.pay_type===2">余额提现</p>
+                        <p>{{item.title}}</p>
+                        <p>{{item.create_time}}</p>
+                    </div>
+                    <div class="item-right">
+                        <p class="in" v-if="item.price_type===1"><span>+</span><span>{{item.price}}</span></p>
+                        <p class="out" v-else><span>-</span><span>{{item.price}}</span></p>
+                        <p><span>余额
 
-        </div>
+                        <template v-if="item.balance>0"> {{item.balance}}</template>
+                          <template v-else> 0</template>
+
+                    </span></p>
+                    </div>
+                </div>
+
+            </div>
         </div>
         <div v-if="search===2">
-          <div style="padding-top: 1.2rem;">
+            <div style="padding-top: 1.2rem;">
+                <div v-for="cc,i in list">
+                    <sticky-slot class="stickyTop">
+                        <div class="tab">
+                            <div class="date-pick">
+                                <div class="pick-icon" @click="showTimePick">
+                                    <span>{{cc.months}}</span>
+                                    <div class="icon-pull"><img src="@/assets/pull-down.png"/></div>
+                                </div>
+                                <div class="in-out-come">
+                                    <p class="in-come">收入¥{{cc.income}}.00</p>
+                                    <p class="out-come">支出¥{{cc.spending}}.00</p>
+                                </div>
+                            </div>
+                        </div>
+                    </sticky-slot>
+                    <div class="bill-list">
+                        <div class="list-item border-bottom" v-for="(item,index) in cc.list" @click="togowitg(item)">
+                            <div class="item-left">
+                                <p v-if="item.pay_type===1">
+                                    {{item.cost_title}}
+                                </p>
+                                <p v-if="item.pay_type===2">余额提现</p>
+                                <p>{{item.title}}</p>
+                                <p>{{item.create_time}}</p>
+                            </div>
+                            <div class="item-right">
+                                <p class="in" v-if="item.price_type===1">
+                                    <span>+</span><span>{{item.price}}</span></p>
+                                <p class="out" v-else><span>-</span><span>{{item.price}}</span></p>
+                                <p><span>余额
+                                     <template v-if="item.balance>0"> {{item.balance}}</template>
+                          <template v-else> 0</template>
 
-              <div v-for="cc,i in list">
-                  <sticky-slot class="stickyTop">
-                      <div class="tab">
-                          <div class="date-pick">
-                              <div class="pick-icon" @click="showTimePick">
-                                  <span>{{cc.months}}</span>
-                                  <div class="icon-pull"><img src="@/assets/pull-down.png"/></div>
-                              </div>
-                              <div class="in-out-come">
-                                  <p class="in-come">收入¥{{cc.income}}.00</p>
-                                  <p class="out-come">支出¥{{cc.spending}}.00</p>
-                              </div>
-                          </div>
-                      </div>
-                  </sticky-slot>
+                              </span></p>
+                            </div>
+                        </div>
 
-                  <div class="bill-list">
-                      <div class="list-item border-bottom" v-for="(item,index) in cc.list" @click="togowitg(item)">
-                          <div class="item-left">
-                              <p v-if="item.pay_type===1">
-                                  {{item.cost_title}}
-                              </p>
-                              <p v-if="item.pay_type===2">余额提现</p>
-                              <p>{{item.title}}</p>
-                              <p>{{item.create_time}}</p>
-                          </div>
-                          <div class="item-right">
-                              <p class="in" v-if="item.price_type===1"><span>+</span><span>{{item.price}}</span></p>
-                              <p class="out" v-else><span>-</span><span>{{item.price}}</span></p>
-                              <p><span>余额{{item.balance}}</span></p>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -98,7 +106,7 @@
         name: "Bill",
         data() {
             return {
-                search:2,
+                search: 2,
                 // value: '',
                 title: '账单',
                 currentDate: new Date(),
@@ -106,11 +114,11 @@
                 showPick: false,
                 list: [],
                 daytime: new Date,
-                listQuery:{
-                    time:undefined,
-                    type:3,
-                    shop_id:undefined,
-                    search:undefined,
+                listQuery: {
+                    time: undefined,
+                    type: 3,
+                    shop_id: undefined,
+                    search: undefined,
 
                 },
                 income: 0,
@@ -131,23 +139,23 @@
         created() {
 
 
-            let query=this.$route.query;
+            let query = this.$route.query;
             console.log(query.type)
-            if(query.type===undefined){
-            this.daytime=this.totime(new Date())
-            }else{
-                this.listQuery.time=query.time
-                this.listQuery.type=query.type
-                this.listQuery.search=1;
-                this.search=1;
-                if(query.type===1){
-                    this.daytime= query.time.substring(5,100)
-                }else{
-                    this.daytime= query.time[0].substring(5,100)+' '+query.time[1].substring(5,100)
+            if (query.type === undefined) {
+                this.daytime = this.totime(new Date())
+            } else {
+                this.listQuery.time = query.time
+                this.listQuery.type = query.type
+                this.listQuery.search = 1;
+                this.search = 1;
+                if (query.type === 1) {
+                    this.daytime = query.time.substring(5, 100)
+                } else {
+                    this.daytime = query.time[0].substring(5, 100) + ' ' + query.time[1].substring(5, 100)
                 }
             }
 
-            this.listQuery.shop_id=this.sele_shop.id
+            this.listQuery.shop_id = this.sele_shop.id
             GetShopidByList(this.listQuery).then(res => {
                 this.list = res.data.data
                 this.income = res.data.income
@@ -156,7 +164,7 @@
         },
         methods: {
 
-            totime(date){
+            totime(date) {
 
                 let seperator1 = "-";
                 let month = date.getMonth() + 1;
@@ -167,7 +175,7 @@
                 if (strDate >= 0 && strDate <= 9) {
                     strDate = "0" + strDate;
                 }
-                return  month +seperator1 +strDate;
+                return month + seperator1 + strDate;
             },
             toggleRetun() {
                 this.$router.push('/');//返回上一层
@@ -193,7 +201,7 @@
                 let id = data.id
                 this.$router.push({path: '/bill/billdetails', query: {id}})
             },
-            tosearch(url){
+            tosearch(url) {
                 this.$router.push({path: url})
             },
         }
@@ -217,16 +225,18 @@
             }
         }
     }
-.sticky-warp{
-    .date-pick {
-        margin-top:0rem
-        background: #eee;
-        padding: .1rem 3%;
-        display: flex;
-        justify-content space-between;
+
+    .sticky-warp {
+        .date-pick {
+            margin-top: 0rem
+            background: #eee;
+            padding: .1rem 3%;
+            display: flex;
+            justify-content space-between;
+        }
+
     }
 
-}
     //  时间选择
     .date-pick {
         margin-top 1.2rem

@@ -51,7 +51,7 @@
         </div>
         <!--  tab内容  -->
         <div class="taborder">
-          <Orderlist :orderlist="orderlist" :num="num" />
+          <Orderlist :orderlist="orderlist" @handelist="getlist()" :num="num" />
         </div>
       </div>
 
@@ -126,6 +126,8 @@ export default {
   },
   methods: {
     getlist() {
+        this.listQuery.openid=this.userInfo.openid
+        // console.log(this.userInfo)
       GetDataByList(this.listQuery).then(res => {
         if (res) {
           if (res.code === 20000) {

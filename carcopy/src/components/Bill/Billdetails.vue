@@ -12,8 +12,8 @@
                 </div>
                 <div class="top-price">
                     <!-- <span>+</span> -->
-                    <span  v-if="details.price_type===1">+</span>
-                    <span  v-else>-</span>
+                    <span v-if="details.price_type===1">+</span>
+                    <span v-else>-</span>
                     <span>{{details.price}}</span>
 
                 </div>
@@ -22,15 +22,15 @@
             <div class="warp-detail">
                 <div class="details-name" v-if="details.pay_type===2">
                     <div class="name-title">收款账户</div>
-                    <div class="name-desc">{{details.user.nickname}}{{details.user.tel}}</div>
+                    <div class="name-desc">{{details.user.nickname}}-{{details.realName }}</div>
                 </div>
                 <div class="details-name">
                     <div class="name-title">款项说明</div>
                     <div class="name-desc">{{details.title}}</div>
                 </div>
                 <!--<div class="details-name">-->
-                    <!--<div class="name-title">商品说明</div>-->
-                    <!--<div class="name-desc">{{details.product_titile}}</div>-->
+                <!--<div class="name-title">商品说明</div>-->
+                <!--<div class="name-desc">{{details.product_titile}}</div>-->
                 <!--</div>-->
                 <div class="details-name">
                     <div class="name-title">当前状态</div>
@@ -43,6 +43,11 @@
                 <div class="details-name">
                     <div class="name-title">记账编号</div>
                     <div class="name-desc">{{details.time}}</div>
+                </div>
+
+                <div class="details-name" v-if="details.partner_trade_no">
+                    <div class="name-title">商户订单号</div>
+                    <div class="name-desc">{{details.partner_trade_no}}</div>
                 </div>
 
             </div>
@@ -142,7 +147,7 @@
                         margin-top .1rem;
                     }
                     .name-desc {
-                        width 6.6rem;
+                        width 6rem;
                         font-size: 0.4rem;
                         font-family: Source Han Sans CN;
                         font-weight: 400;

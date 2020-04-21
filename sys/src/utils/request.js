@@ -50,15 +50,9 @@ service.interceptors.response.use(
         const res = response.data
 
         // if the custom code is not 20000, it is judged as an error.
-        if (res.code !== 20000||res.errorCode===999||res.errorCode===10001) {
-            Toast(res.msg)
+        if (res.code !== 20000||res.errorCode===999||res.errorCode==10001) {
 
-            // Message({
-            //     message: res.message || 'Error',
-            //     type: 'error',
-            //     duration: 5 * 1000
-            // })
-            //10301-10399 ，用户相关
+
             if(res.code === 10309||res.code===10310){
                 return res;
             }
@@ -76,6 +70,7 @@ service.interceptors.response.use(
                 //     })
                 // })
             }
+            return res
             // Toast(res.msg)
             // return Promise.reject(new Error(res.message || 'Error'))
         } else {
