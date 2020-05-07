@@ -28,7 +28,52 @@ export function GetShopIdByInfo(temp) {
 }
 
 
+export function GetShopIdByInfoBind(temp) {
+    return request({
+        url: '/shop/GetShopIdByInfoBind',
+        method: 'post',
+        params: temp
+    })
+}
 
+/**
+ * 绑定门店员工
+ * @param temp
+ * @constructor
+ */
+export function PostBindByShop(temp) {
+    return request({
+        url: '/shop/PostBindByShop',
+        method: 'post',
+        params: temp
+    })
+}
+
+export function GetRoleByList(user_id) {
+    return request({
+        url: '/shop/GetRoleByList',
+        method: 'get',
+        params: {user_id}
+    })
+}
+
+
+
+
+export function PostDataBySave(temp) {
+    return request({
+        url: '/shop/PostDataBySave',
+        method: 'post',
+        params: temp
+    })
+}
+export function GetIdByShop(query) {
+    return request({
+        url: '/shop/GetIdByShop',
+        method: 'get',
+        params: query
+    })
+}
 export function GetDataByList(user_id) {
     return request({
         url: '/shop/GetDataByList',
@@ -58,8 +103,6 @@ export function PostDataShopImg(data) {
 }
 
 
-
-
 export function GetIdByenv(id) {
     return request({
         url: '/shop/GetIdByenv',
@@ -70,9 +113,6 @@ export function GetIdByenv(id) {
 
     })
 }
-
-
-
 
 
 export function PostBusingessByAdd(data) {
@@ -93,6 +133,14 @@ export function GetBusingessByList(id) {
     })
 }
 
+
+export function GetIdByDelete(query) {
+    return request({
+        url: '/shop/GetIdByDelete',
+        method: 'GET',
+        params:query
+    })
+}
 
 
 //home轮播图

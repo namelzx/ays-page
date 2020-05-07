@@ -224,11 +224,23 @@
             });
             this.userinfo = JSON.parse(getUser());
             GetUserIdByCheck(this.userinfo.id).then(res => {
+                console.log(res)
                 if (res.data !== null) {
-                    this.temp = res.data;
+
+                    if (res.data.check === null) {
+
+
+                        return true;
+                    }
+                    this.temp = res.data.check;
                     if (this.temp.status === 1) {
                         this.auditshow = true;
                     }
+                    if (this.temp.status === null) {
+                        this.auditshow = true;
+                    }
+
+                    console.log( this.auditshow)
                     this.front.push({url: this.temp.front});
                     this.license.push({url: this.temp.license});
                     for (let i = 0; i < this.temp.env.length; i++) {

@@ -10,6 +10,7 @@ background-size: cover;"
       <p class="cate-eng">INSTALLATION LIST</p>
     </div>
     <div
+            v-if="userInfo.role_tyoe===1"
       class="category-item"
       style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/%E4%BC%98%E6%83%A0%E5%88%B8%E8%83%8C%E6%99%AF%402x%20%281%29.png');background-position: center;
 background-size: cover;"
@@ -18,27 +19,23 @@ background-size: cover;"
       <p class="cate-title">优惠券</p>
       <p class="cate-eng">COUPON</p>
     </div>
-    <!--<div class="category-item"-->
-    <!--style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/bill%402x.png');background-position: center;-->
-    <!--background-size: cover;"-->
-    <!--@click="goToDetail('/bill')"-->
-    <!--&gt;-->
-    <!--<p class="cate-title">账单</p>-->
-    <!--<p class="cate-eng">BILL</p>-->
-    <!--</div>-->
+
     <div
       class="category-item"
       style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/official.png');background-position: center;
 background-size: cover;"
+      v-if="userInfo.role_tyoe===1"
       @click="goToDetail('/imagetext')"
     >
       <p class="cate-title">图文案例</p>
       <p class="cate-eng">CASE</p>
     </div>
+
     <div
       class="category-item"
       style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/upload%402x.png');background-position: center;
 background-size: cover;"
+       v-if="userInfo.role_tyoe===1"
       @click="goToDetail('/upload')"
     >
       <p class="cate-title">视频案例</p>
@@ -53,18 +50,39 @@ background-size: cover;"
       <p class="cate-title">核销</p>
       <p class="cate-eng">VERIFICARTION SLIP</p>
     </div>
+    <div
+            class="category-item"
+            style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/official.png');background-position: center;
+background-size: cover;"
+            v-if="userInfo.role_tyoe===2"
+            @click="goToDetail('/imagetext')"
+    >
+      <p class="cate-title">营销推广</p>
+      <p class="cate-eng">PROMOTE</p>
+    </div>
   </div>
 </template>
 
 <script>
 import { Toast } from "vant";
+import {mapGetters} from "vuex";
 
 export default {
   name: "Category",
   props: {
     cateList: {
       type: Array
+    },
+    role_tyoe:{
+      type:Number,
+      default:1
     }
+  },
+  computed: {
+    ...mapGetters(["userInfo", "sele_shop"])
+  },
+  created() {
+    console.log(this.userInfo)
   },
   methods: {
     goToDetail(data) {

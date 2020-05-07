@@ -64,11 +64,11 @@ export function PostDataByVideo(data) {
 }
 
 
-export function GetCodeBycheckCode(code) {
+export function GetCodeBycheckCode(query) {
     return request({
         url: '/Order/GetCodeBycheckCode',
         method: 'get',
-        params:{code}
+        params:query
 
     })
 }

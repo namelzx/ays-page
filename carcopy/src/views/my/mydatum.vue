@@ -29,8 +29,6 @@
                 <div>更新资料</div>
             </div>
         </div>
-
-
         <!-- 更改用户名弹窗  -->
         <div class="up-users" v-if="Upusers" @touchmove.prevent>
             <div class="usersBox">
@@ -53,7 +51,7 @@
                 <div class="usersBoxHe">
                     <div class="title">更新手机号码</div>
                     <div class="inps">
-                        <input v-model="userInfo.tel" maxlength="11" @input="phoneInput" />
+                        <input v-model="userInfo.tel" type="number" οninput="value=value.replace(/[^\d]/g,'')" maxlength="11" @input="phoneInput" />
                         <span>{{ohoneremnant}}/11</span>
                     </div>
                     <div class="user-btn">
@@ -165,6 +163,7 @@
         overflow: hidden;
         border: 1px solid #d1d1d1;
         margin: 1rem auto .65rem;
+        margin-top:1.5rem !important;
         img{
             width: 100%;
             height: 100%;

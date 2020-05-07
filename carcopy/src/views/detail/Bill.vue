@@ -146,6 +146,7 @@
             } else {
                 this.listQuery.time = query.time
                 this.listQuery.type = query.type
+                this.listQuery.user_id = this.userInfo.id
                 this.listQuery.search = 1;
                 this.search = 1;
                 if (query.type === 1) {
@@ -156,6 +157,7 @@
             }
 
             this.listQuery.shop_id = this.sele_shop.id
+            this.listQuery.user_id = this.userInfo.id
             GetShopidByList(this.listQuery).then(res => {
                 this.list = res.data.data
                 this.income = res.data.income

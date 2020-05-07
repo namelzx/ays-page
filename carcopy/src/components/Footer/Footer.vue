@@ -23,7 +23,7 @@
               :src="props.active ? icon.active : icon.inactive"
             >
           </van-tabbar-item>
-            <van-tabbar-item replace to="/message">
+            <van-tabbar-item replace to="/message" v-if="userInfo.role_tyoe===1">
                 <span>消息</span>
                 <img
                         slot="icon"
@@ -31,7 +31,7 @@
                         :src="props.active ? icon.active2 : icon.inactive2"
                 >
             </van-tabbar-item>
-          <van-tabbar-item replace to="/shop">
+          <van-tabbar-item replace to="/shop" v-if="userInfo.role_tyoe===1">
             <span>店铺</span>
             <img
               slot="icon"
@@ -53,7 +53,9 @@
 </template>
 
 <script>
-  export default {
+    import {mapGetters} from "vuex";
+
+    export default {
     name: "Footer",
     data () {
       return {
@@ -70,6 +72,9 @@
         }
       }
     },
+        computed: {
+            ...mapGetters(["userInfo", "sele_shop"])
+        },
     methods: {
       clickToAdmin () {
         let is_shop =  this.is_shop;

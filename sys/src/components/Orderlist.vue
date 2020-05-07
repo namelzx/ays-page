@@ -1,6 +1,6 @@
 <template>
     <div class="orderlist">
-        <div class="content" v-for="(item,index) in orderlist" :key="index" >
+        <div class="content" v-for="(item,index) in orderlist" :key="index">
             <van-skeleton
                     title
                     animate
@@ -56,7 +56,7 @@
                 <div v-if="item.status==='待安装'" class="price-btn" @click="proceed(item)">核销</div>
             </van-skeleton>
         </div>
-          <!---->
+        <!---->
         <!--</van-popup>-->
         <div class="orderCode" v-if="cancel" @touchmove.prevent>
             <div class="CodeHe">
@@ -65,7 +65,7 @@
                 <div class="Co-scan">
 
                     <img src="@/assets/code.png"/>
-                    <div id="qrcode" ></div>
+                    <div id="qrcode"></div>
 
                 </div>
                 <div class="Co-remind">
@@ -83,8 +83,8 @@
 </template>
 
 <script>
-    import { Popup } from 'vant';
-    import QRCode  from "qrcodejs2"
+    import {Popup} from 'vant';
+    import QRCode from "qrcodejs2"
 
     export default {
         name: 'Orderlist',
@@ -93,22 +93,22 @@
             return {
                 loading: true,
                 cancel: false,
-                verification_code:'',
+                verification_code: '',
                 link: 'https://baidu.com'
 
             }
         },
-        components:{
+        components: {
             Popup,
             QRCode
         },
         methods: {
-            qrcode () {
+            qrcode() {
                 let that = this;
                 let qrcode = new QRCode('qrcode', {
                     width: 200,
                     height: 200,        // 高度
-                    text:  this.link,   // 二维码内容
+                    text: this.link,   // 二维码内容
                     // render: 'canvas' ,   // 设置渲染方式（有两种方式 table和canvas，默认是canvas）
                     // background: '#f0f',   // 背景色
                     // foreground: '#ff0'    // 前景色
@@ -117,9 +117,9 @@
             //点击弹出核销订单
             proceed(row) {
                 this.cancel = !this.cancel;
-                this.verification_code=row.verification_code
-                this.link='http://pd.aesups.com/shop/#/slip-voucher?id='+row.id
-                this.$nextTick (function () {
+                this.verification_code = row.verification_code
+                this.link = 'http://pd.aesups.com/shop/#/slip-voucher?id=' + row.id
+                this.$nextTick(function () {
                     this.qrcode();
                 })
             },
@@ -154,9 +154,11 @@
         padding-bottom: 1.6rem;
         width: 10rem;
         overflow: hidden;
+
         /deep/ .van-skeleton__content {
             margin-top: .7rem;
         }
+
         .price-btn {
             width: 1.57rem;
             height: 0.83rem;
@@ -173,6 +175,7 @@
             bottom: 10px;
             right: 10px;
         }
+
         .content {
             margin: 0 auto;
             margin-top: .4rem;
@@ -183,19 +186,24 @@
             box-shadow: 0px 3px 14px 0px rgba(153, 153, 153, 0.2);
             overflow: hidden;
             position: relative;
+
             .contentBox {
                 margin: 0 0.2rem;
                 height: 100%;
+
                 .price {
                     display: flex;
                     justify-content: space-between;
+
                     .price-left {
                         color: $color;
                         display: flex;
                         margin-left: .2rem;
+
                         span {
                             display: block;
                         }
+
                         .nums {
                             font-size: 0.8rem;
                             // font-family:Source Han Sans CN;
@@ -204,6 +212,7 @@
                         }
 
                     }
+
                     .price-time {
                         font-size: 0.27rem;
                         font-family: Source Han Sans CN;
@@ -211,6 +220,7 @@
                         color: rgba(43, 43, 43, 1);
                         margin-top: .2rem;
                         margin-right: .4rem;
+
                         .time-num {
                             font-size: 0.4rem;
                             font-family: Source Han Sans CN;
@@ -220,38 +230,45 @@
                         }
                     }
                 }
+
                 .state {
                     margin-left: .2rem;
                     display: flex;
                     font-size: .32rem;
+
                     .state-num {
                         color: #2B2B2B;
                         font-size: 0.4rem;
                         font-weight: 400;
                         width: 4.7rem;
                     }
+
                     .state-status {
                         font-size: 0.32rem;
                         font-weight: 400;
                         color: #666666;
                         font-family: Source Han Sans CN;
                         font-weight: 400;
+
                         .judge {
                             color: $color;
                             margin-left: .2rem;
                         }
                     }
                 }
+
                 .product {
                     margin-top: .25rem;
                     margin-left: .2rem;
                     font-size: 0.32rem;
                     color: #666666;
                     font-weight: 400;
+
                     .product-names {
                         color: #333333;
                     }
                 }
+
                 .rate {
                     margin-left: .2rem;
                     margin-top: .2rem;
@@ -259,25 +276,31 @@
                     font-size: 0.32rem;
                     color: #999999;
                     display: flex;
+
                     .ratetitle {
                         color: #666666;
                     }
+
                     .ratesp {
                         margin-right: .1rem;
                     }
+
                     .ra-active {
                         color: $color;
                     }
                 }
+
                 .reject {
                     margin-left: .2rem;
                     margin-top: .2rem;
                     padding-bottom: .4rem;
                     font-size: 0.32rem;
                     color: $color;
+
                     .cause {
                         color: #333333;
                     }
+
                     .await {
                         color: $color;
                         margin-left: .2rem;
@@ -286,6 +309,7 @@
             }
         }
     }
+
     .orderCode {
         position: fixed;
         top: 0;
@@ -294,46 +318,56 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.2);
         z-index: 20;
+
         .CodeHe {
             margin: 5rem auto 0;
-            width:7.2rem;
-            height:8.61rem;
+            width: 7.2rem;
+            height: 8.61rem;
             background: rgba(255, 255, 255, 1);
             border-radius: 0.27rem;
             overflow: hidden;
             text-align: center;
             position: relative;
+
             .Co-title {
                 margin-top: 0.37rem;
-                font-size:0.45rem;
-                font-family:Source Han Sans CN;
-                font-weight:400;
+                font-size: 0.45rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
                 color: #333333;
             }
+
             .Co-number {
-                font-size:0.45rem;
-                font-family:Source Han Sans CN;
-                font-weight:400;
+                font-size: 0.45rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
                 color: #333333;
             }
+
             .Co-scan {
                 width: 4.47rem;
                 height: 4.47rem;
                 margin: 0.2rem auto;
                 position: relative;
+
                 img {
                     width: 100%;
                     height: 100%;
                 }
-                #qrcode{
+                #qrcode {
                     position: absolute;
                     top: 28%;
                     left: 20%;
-
+                    width: 100%;
+                }
+                div img {
+                    width: 58% !important;
                 }
             }
+
             .Co-remind {
                 display: flex;
+
                 img {
                     display: inline-block;
                     width: 0.37rem;
@@ -342,6 +376,7 @@
                     margin-left: 1.3rem;
                     margin-right: 0.2rem;
                 }
+
                 span {
                     margin-top: .1rem;
                     font-size: 0.32rem;
@@ -349,6 +384,7 @@
                     display: inline-block;
                 }
             }
+
             .Co-Btns {
                 position: absolute;
                 bottom: 0;
@@ -360,12 +396,14 @@
                 text-align: center;
                 border-top: 0.01rem solid #e5e5e5;
                 font-size: 0.45rem;
+
                 .Btns-left {
                     width: 50%;
                     border-right: 0.01rem solid #e5e5e5;
                     box-sizing: border-box;
                     color: #999999;
                 }
+
                 .Btns-right {
                     width: 50%;
                 }

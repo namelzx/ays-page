@@ -48,6 +48,17 @@
                     </div>
                 </div>
             </router-link>
+
+            <router-link tag="div" to="/assistant" class="bus-item">
+                <div class="itemBox">
+                    <div>
+                        <span class="dianyuan-icon"></span>店员管理
+                    </div>
+                    <div class="item-img">
+                        <img src="../../assets/right-fx.png"/>
+                    </div>
+                </div>
+            </router-link>
             <!--<div tag="div" @click="handelUrl('/manage-business')" class="bus-item">-->
                 <!--<div class="itemBox">-->
                     <!--<div>-->
@@ -253,6 +264,13 @@
 
     .bus-item span.shop-icon {
         background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/shop.png');
+        background-position: 0 0;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .bus-item span.dianyuan-icon {
+        background: url('https://kedand.oss-cn-beijing.aliyuncs.com/images/icon_dianyuan@3x.png ');
         background-position: 0 0;
         background-size: cover;
         background-repeat: no-repeat;

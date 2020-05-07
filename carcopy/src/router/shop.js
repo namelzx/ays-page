@@ -16,6 +16,30 @@ export default [
     // }
   },
   {
+    path:'/assistant',
+    name:'assistant',
+    component: () => import('../views/shop/assistant'),
+    // meta: {
+    //   title: '店铺资料'`
+    // }
+  },
+  {
+    path:'/assistant/code',
+    name:'acode',
+    component: () => import('../views/shop/assistant/code'),
+    // meta: {
+    //   title: '店铺资料'`
+    // }
+  },
+  {
+    path:'/assistant/bind',
+    name:'abind',
+    component: () => import('../views/shop/assistant/bind'),
+    // meta: {
+    //   title: '店铺资料'`
+    // }
+  },
+  {
     path:'/shop/agreement',
     name:'Agreement',
     component: () => import('../views/shop/Agreement'),

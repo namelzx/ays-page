@@ -43,6 +43,8 @@ import {getUser, removeUser, setUser} from '@/utils/auth'
 import {GetIdBydetails,PostNoteByAdd,GetIdByStatus} from "@/api/order";
 import {getInfo, login} from '@/api/user'
 import { Toast } from 'vant';
+import {mapGetters} from "vuex";
+
 export default {
   name: "Voucher",
   data() {
@@ -58,6 +60,9 @@ export default {
         }
 
     };
+  },
+  computed: {
+    ...mapGetters(["userInfo"])
   },
   components: {
     Toptitle
@@ -109,13 +114,12 @@ export default {
       this.$router.go(-1);//返回上一层
     },
     toggleInstall() {
-          console.log('12')
       if (this.postFrom.credentials !== "") {
-          console.log('33')
           if(!this.is_send){
               return true
           }
           this.is_send=false
+         this.postFrom.user_id=this.userInfo.id
           GetIdByStatus(this.postFrom).then(res=>{
               if(res.code===20000){
                   this.$router.push({ path: "/install", query: { id: 3 } });

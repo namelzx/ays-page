@@ -26,7 +26,7 @@
         <div @click="togodeposit('/embody/deposit')"
              :class='["money-btn",money<100 ||money===undefined || money > balance ? "money-btn-acvite":""]'>提现
         </div>
-        <div class="embodyWarn">单日提现不少于￥100， 每日上限￥20，000</div>
+        <div class="embodyWarn">单次提现不少于￥100， 每日上限￥20，000</div>
     </div>
 </template>
 <script>
@@ -44,7 +44,7 @@
                 title: "提现",
                 money: 0, //金额
                 balance: 1000, //可用余额
-                pay:true,
+                pay: true,
             }
         },
         computed: {
@@ -56,7 +56,7 @@
         created() {
             GetUserByBalance(this.userInfo.id).then(res => {
                 this.balance = res.data
-
+                // this.balance=1000;
             })
         },
         methods: {
@@ -69,27 +69,26 @@
             togodeposit(data) {
                 if (this.money < 100 || this.money > this.balance) {
                     return
-                }
-                else {
+                } else {
 
                     var temp = {
                         shop_id: this.sele_shop.id,
                         price: this.money,
-                        user_id:this.userInfo.id
+                        user_id: this.userInfo.id
                     }
-                    if(this.pay===false){
+                    if (this.pay === false) {
                         Toast('提现请求中');
                         return
                     }
-                    this.pay=false;
+                    this.pay = false;
 
                     PostDataByAdd(temp).then(res => {
                         if (res.code === 10001) {
                             Toast(res.msg)
-                            this.pay=true
+                            this.pay = true
                             return false
                         }
-                        this.$router.push({path:data,query:{balance:this.money}})
+                        this.$router.push({path: data, query: {balance: this.money}})
 
                     })
                 }
@@ -112,12 +111,15 @@
         margin 0rem auto .2rem;
         background #ffffff;
         margin-top 40px;
+
         .em-cons {
             width 8.32rem;
             margin 0.3rem auto;
+
             .cons-title {
                 display flex;
                 justify-content space-between;
+
                 .title1 {
                     width 50%;
                     display inline-block;
@@ -125,6 +127,7 @@
                     font-scale 0.32rem;
                     color #333333;
                 }
+
                 .title2 {
                     text-align right;
                     width 50%;
@@ -133,12 +136,15 @@
                     color #666666;
                 }
             }
+
             .cons-money {
                 margin-top .9rem;
+
                 .money-title {
                     color #333333;
                     font-size: 0.32rem;
                 }
+
                 .money-impot {
                     width 8.32rem;
                     height 1.3rem;
@@ -148,25 +154,30 @@
                     color #333333;
                     font-size: 0.8rem;
                     margin-top .2rem;
+
                     .impot-unit {
-                        margin-right .2rem;
+                        /*margin-right .2rem;*/
                         border 0;
                     }
+
                     input {
                         width 6rem;
 
                         border 0;
                     }
                 }
+
                 .money-bal {
                     margin-top .2rem;
                     color #666666;
                     font-size: 0.32rem;
+
                     .bal-left {
                         width 50%;
                         display inline-block;
                         text-align left;
                     }
+
                     .bal-right {
                         width 50%;
                         display inline-block;

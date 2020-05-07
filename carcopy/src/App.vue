@@ -23,44 +23,39 @@
         },
 
         created() {
-            const leng = myconfig.url_href.length;//获取前端路径的地址
-            var str = location.href; //获取当前地址
-            var id = this.$route.params.id
-            let user_id=this.$route.query.user_id
-            let shop_id=this.$route.query.shop_id
+            // var that = this;
+            // let user_id = that.$route.query.id
+            // console.log(user_id)
+            // if (user_id !== undefined) {
+            //     console.log('不等空')
+            //     getInfo(user_id).then(res => {
+            //         //执行某个方法dispatch 要指定modules下面的文件里面的方法才起作用
+            //         that.$store.dispatch('user/login', res.data)
+            //         setUser(res.data)
+            //     })
+            //     return true;
+            // }
+            // if (getUser()) {
+            //     const strToObj = JSON.parse(getUser())
+            //     user_id = strToObj.id
+            //     that.$store.dispatch('user/login', strToObj)
+            //     return false;
+            // } else {
+            //     console.log(getUser())
+            //     var temp = {};
+            //     login(temp).then(res => {
+            //         // window.location.href = res.data
+            //     })
+            //
+            // }
 
-            if (getUser() !== undefined&&getUser()!=='null') {
-                const strToObj = JSON.parse(getUser())
-                this.$store.dispatch('user/login', strToObj)
-                return false;
-            }
-            if(user_id !==undefined){
-                getInfo(user_id).then(res => {
-                    //执行某个方法dispatch 要指定modules下面的文件里面的方法才起作用
-                    this.$store.dispatch('user/login', res.data)
-                    setUser(res.data)
-                })
-                return true;
-            }
-
-            if (id !== undefined||user_id!==undefined) {
-                getInfo(id).then(res => {
-                    //执行某个方法dispatch 要指定modules下面的文件里面的方法才起作用
-                    this.$store.dispatch('user/login', res.data)
-                })
-            }
-            else {
-                var temp = {};
-
-                login(temp).then(res => {
-                    window.location.href = res.data
-                })
-            }
         },
-        watch:{
-            $route(to,from){
+        watch: {
 
-                if(to.query.user_id!==undefined){
+
+            $route(to, from) {
+
+                if (to.query.user_id !== undefined) {
 
                 }
             }

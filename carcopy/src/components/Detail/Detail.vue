@@ -465,7 +465,8 @@
                     console.log(this.showinfo);
                     var temp = {
                         shop_id: res.data.shop_id,
-                        user_id: this.userInfo.id
+                        user_id: this.userInfo.id,
+                        type:2,
                     };
                     console.log(temp);
                     GetShopIdByInfo(temp).then(res => {
@@ -542,7 +543,8 @@
             toggleInstall() {
                 var temp = {
                     id: this.id,
-                    status: 3
+                    status: 3,
+                    user_id:this.userInfo.id
                 };
                 if (!this.is_send) {
                     return true;

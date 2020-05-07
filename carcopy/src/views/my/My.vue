@@ -3,16 +3,20 @@
     <div class="my">
         <div class="myBox">
             <div class="my-data">
-                <div class="data-icon"><img :src="userInfo.headimgurl" /></div>
+                <div class="data-icon"><img :src="userInfo.headimgurl"/></div>
                 <div class="data-look" @click="toggleDatum">
                     <div class="look-name">{{userInfo.nickname}}</div>
                     <div class="look-btn">微信昵称</div>
                 </div>
             </div>
-            <div class="my-car" @click="toggleCar">
+            <div class="my-car" @click="toggleCar" v-if="userInfo.role_tyoe===1">
                 <div>钱包</div>
-                <div class="car-icon"><img src="@/assets/you.png" /></div>
+                <div class="car-icon"><img src="@/assets/you.png"/></div>
             </div>
+
+            <van-cell-group v-if="userInfo.role_tyoe===2">
+                <van-cell v-for="(item,index) in list" :title="item.shopname"/>
+            </van-cell-group>
         </div>
 
         <my-footer class="home-footer"/>
@@ -22,90 +26,112 @@
     import MyFooter from "./../../components/Footer/Footer";
     import {getUser, removeUser, setUser} from '@/utils/auth'
     import {mapGetters} from 'vuex'
+    import {GetRoleByList} from '@/api/shop'
+
 
     export default {
-        name:'My',
-        components:{
+        name: 'My',
+        data() {
+            return {
+                list: [],
+            }
+        },
+        components: {
             MyFooter
         },
-        computed:{
+        computed: {
             ...mapGetters([
                 'userInfo'
             ])
         },
-        created(){
+        created() {
             console.log(this.userInfo)
-
+            if (this.userInfo.role_tyoe === 2) {
+                GetRoleByList(this.userInfo.id).then(res => {
+                    // console.log(res)
+                    this.list = res.data
+                })
+            }
         },
-        methods:{
+        methods: {
             toCompile() {
-                this.$router.push({path:'/my/mycompile'})
+                this.$router.push({path: '/my/mycompile'})
             },
             //钱包
             toggleCar() {
-                this.$router.push({path:'/shop/Guarantee'})
+                this.$router.push({path: '/shop/Guarantee'})
             },
             //编辑我的资料
             toggleDatum() {
-                this.$router.push({path:'/my/mydatum'})
+                this.$router.push({path: '/my/mydatum'})
             }
         }
     }
 </script>
 <style lang="stylus" scoped>
-    .my{
-        font-family:SourceHanSans;
+    .my {
+        font-family: SourceHanSans;
         width: 10rem;
         overflow: hidden;
         border-bottom: 1px solid #DCDCDC;
-        .myBox{
+
+        .myBox {
             width: 9rem;
-            margin:1.19rem auto 0;
-            .my-data{
-                clear:both;
+            margin: 1.19rem auto 0;
+
+            .my-data {
+                clear: both;
                 display: flex;
                 margin-bottom: .45rem;
-                .data-icon{
-                    width:1.71rem;
-                    height:1.71rem;
+
+                .data-icon {
+                    width: 1.71rem;
+                    height: 1.71rem;
                     border-radius: 50%;
-                    border: 1px solid  #F1F1F1;
+                    border: 1px solid #F1F1F1;
                     overflow: hidden;
                     background: #fffdfe;
-                    img{
+
+                    img {
                         width: 100%;
                         height: 100%;
                     }
                 }
-                .data-look{
+
+                .data-look {
                     margin-left: .35rem;
-                    .look-name{
-                        font-size:0.4rem;
-                        font-family:Adobe Heiti Std;
-                        font-weight:600;
-                        color:rgba(51,51,51,1);
+
+                    .look-name {
+                        font-size: 0.4rem;
+                        font-family: Adobe Heiti Std;
+                        font-weight: 600;
+                        color: rgba(51, 51, 51, 1);
                     }
-                    .look-btn{
+
+                    .look-btn {
                         margin-top: 0.08rem;
-                        font-size:0.32rem;
-                        font-family:Adobe Heiti Std;
-                        font-weight:normal;
-                        color:rgba(51,51,51,1);
+                        font-size: 0.32rem;
+                        font-family: Adobe Heiti Std;
+                        font-weight: normal;
+                        color: rgba(51, 51, 51, 1);
                     }
                 }
             }
-            .my-car{
+
+            .my-car {
                 padding: .3rem 0;
-                font-size:0.4rem;
-                font-family:Source Han Sans CN;
-                font-weight:400;
+                font-size: 0.4rem;
+                font-family: Source Han Sans CN;
+                font-weight: 400;
                 display: flex;
                 justify-content: space-between;
                 color: #333333;
-                .car-icon{
+
+                .car-icon {
                     width: .6rem;
                     height: .6rem;
-                    img{
+
+                    img {
                         width: 100%;
                         height: 100%;
                     }

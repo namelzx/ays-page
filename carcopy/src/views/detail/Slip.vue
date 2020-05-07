@@ -69,6 +69,7 @@
 <script>
 import Toptitle from "@/components/Toptitle/Toptitle";
 import {GetCodeBycheckCode} from "@/api/order";
+import {mapGetters} from 'vuex'
 
 import {Toast,Loading,Overlay} from 'vant';
 
@@ -85,7 +86,11 @@ import {Toast,Loading,Overlay} from 'vant';
 
       }
     },
+
     computed: {
+        ...mapGetters([
+            'userInfo'
+        ]),
       isActive() {
         if (this.value === '') {
           this.is_err_msg = false
@@ -103,7 +108,11 @@ import {Toast,Loading,Overlay} from 'vant';
             this.$router.go(-1);//返回上一层
         },
       doSlip() {
-          GetCodeBycheckCode(this.value).then(res=>{
+            var temp={
+                user_id:this.userInfo.id,
+                code:this.value
+            }
+          GetCodeBycheckCode(temp).then(res=>{
               console.log(res)
               if(res.data!==404){
                     this.is_err_msg = false
