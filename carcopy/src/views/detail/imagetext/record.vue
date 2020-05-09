@@ -23,8 +23,40 @@
 
 
     <!--    列表内容    -->
-        <div>
+        <div class="list-warp">
+            <div class="record" v-for="(item,index) in list" :key="index">
+                <div class="record-box">
+                    <div class="record-title">
+                        <div class="title_status">
+                            <span v-if="item.status==1">已上传</span>
+                            <span v-if="item.status==2">已发布</span>
+                            <span v-if="item.status==3">驳回</span>
+                            <span v-if="item.status==4">草稿</span>
+                        </div>
+                        <div class="record-time">{{item.creat_time}}</div>
+                    </div>
+                    <div class="record-content">
+                        <div class="imgs">
+                            <img :src="item.imaes_url" />
+                        </div>
+                        <div class="details">
+                            <div class="desc">
+                                {{item.desc}}
+                            </div>
+                            <div class="mating"></div>
+                            <div class="button" v-if="item.status==3 || item.status==4">
+                                <div class="button-compile">编辑</div>
+                                <div class="button-del">删除</div>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!--   驳回理由    -->
+                    <div class="record-reject" v-if="item.status==3">
+                        <div class="record-reject-liyou">驳回理由：<span>{{item.reason}}</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -43,7 +75,44 @@
                     page: 1,
                     name:"",
                 },
-                list:[],
+                list:[
+                    {
+                        id:1,
+                        imaes_url:"http://img4.imgtn.bdimg.com/it/u=3374416169,262924133&fm=11&gp=0.jpg",
+                        desc:"本田 飞度 2018款 1.5L CTV豪华版CTV豪华版",
+                        brand:"阿帕V5-套装",
+                        creat_time:"2019.07.11 08:08",
+                        reason:"正面/背面照片不清晰，可尝试重新上传",
+                        status:1,
+                    },
+                    {
+                        id:2,
+                        imaes_url:"http://img4.imgtn.bdimg.com/it/u=3374416169,262924133&fm=11&gp=0.jpg",
+                        desc:"本田 飞度 2018款 1.5L CTV豪华版CTV豪华版",
+                        brand:"阿帕V5-套装",
+                        creat_time:"2019.07.11 08:08",
+                        reason:"正面/背面照片不清晰，可尝试重新上传",
+                        status:2,
+                    },
+                    {
+                        id:3,
+                        imaes_url:"http://img4.imgtn.bdimg.com/it/u=3374416169,262924133&fm=11&gp=0.jpg",
+                        desc:"本田 飞度 2018款 1.5L CTV豪华版CTV豪华版",
+                        brand:"阿帕V5-套装",
+                        creat_time:"2019.07.11 08:08",
+                        reason:"正面/背面照片不清晰，可尝试重新上传",
+                        status:3,
+                    },
+                    {
+                        id:4,
+                        imaes_url:"http://img4.imgtn.bdimg.com/it/u=3374416169,262924133&fm=11&gp=0.jpg",
+                        desc:"本田 飞度 2018款 1.5L CTV豪华版CTV豪华版",
+                        brand:"阿帕V5-套装",
+                        creat_time:"2019.07.11 08:08",
+                        reason:"正面/背面照片不清晰，可尝试重新上传",
+                        status:4,
+                    }
+                ],
                 actionBar: [
                     {
                         id: "1",
@@ -53,37 +122,25 @@
                     },
                     {
                         id: "2",
-                        name: "待确认",
+                        name: "已上传",
                         status: 2,
                         total: 0
                     },
                     {
                         id: "3",
-                        name: "待安装",
+                        name: "已发布",
                         status: 3,
                         total: 0
                     },
                     {
                         id: "4",
-                        name: "待审核",
+                        name: "驳回",
                         status: 4,
                         total: 0
                     },
                     {
                         id: "5",
-                        name: "驳回",
-                        status: 2,
-                        total: 0
-                    },
-                    {
-                        id: "6",
-                        name: "已结算",
-                        status: 2,
-                        total: 0
-                    },
-                    {
-                        id: "7",
-                        name: "已退货",
+                        name: "草稿",
                         status: 2,
                         total: 0
                     }
@@ -109,13 +166,19 @@
                     this.listQuery.status = idx;
                 }
                 this.listQuery.page = 1;
-                this.getlist();
             },
         }
     }
 </script>
 
 <style lang="stylus" scoped>
+    .marketing{
+        position: fixed;
+        overflow: auto;
+        height: 100%;
+        background: #f2f2f2;
+        width: 100%;
+    }
     .seek_top{
         position fixed;
         top 0;
@@ -131,7 +194,7 @@
         /* height 1.2rem; */
         line-height: 1.2rem;
         position: fixed;
-        top: 1rem;
+        top: 1.2rem;
         background: #fff;
         width: 100%;
         z-index: 100;
@@ -139,7 +202,8 @@
 
     .bar-item {
         // width 17%;
-        padding: 0 0.1rem;
+        width 20%;
+        /*padding: 0 0.1rem;*/
         text-align: center;
         color: #666;
         font-size: 0.4rem;
@@ -221,5 +285,116 @@
     }
 
 
+    .list-warp{
+        padding-top 2.4rem;
+        width 10rem;
+        .record{
+            width: 10rem;
+            background-color #ffffff;
+            margin-top .4rem;
+            .record-box{
+                padding .45rem;
+                .record-title{
+                    display flex;
+                    flex-direction row;
+                    justify-content space-between;
+                    height .8rem;
+                    .title_status{
+                        font-size:0.35rem;
+                        font-family:Source Han Sans CN;
+                        font-weight:bold;
+                        color:rgba(234,55,86,1);
+                        margin-left .47rem;
+                    }
+                    .record-time{
+                        font-size:0.32rem;
+                        font-family:Source Han Sans CN;
+                        font-weight:400;
+                        color:rgba(102,102,102,1);
+                    }
+                }
+                .record-content{
+                    display flex;
+                    flex-direction row;
+                    justify-content space-between;
+                    .imgs{
+                        width 2.48rem;
+                        height 2.48rem;
+                        img{
+                            width: 100%;
+                            height 100%
+                        }
+                    }
+                    .details{
+                        width 6.29rem;
+                        display flex;
+                        flex-direction column;
+                        justify-content center;
+                        .desc{
+                            color #333333;
+                            font-size 0.37rem;
+                            line-height 1.5;
+                            overflow: hidden;
+                            -webkit-box-orient: vertical;
+                            -webkit-line-clamp: 2;
+                        }
+                        .mating{
+                            margin-top: .35rem;
+                            font-size:0.35rem;
+                            font-family:Source Han Sans CN;
+                            font-weight:400;
+                            color:rgba(51,51,51,1);
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            white-space: nowrap;
+                        }
+                        .button{
+                            margin-top: .4rem;
+                            display flex;
+                            justify-content flex-end;
+                            font-size:0.32rem;
+                            font-family:Source Han Sans CN;
+                            font-weight:500;
+                            color:rgba(255,255,255,1);
+                            .button-compile{
+                                width:1.6rem;
+                                height:0.83rem;
+                                line-height 0.83rem;
+                                text-align center;
+                                background:rgba(234,55,86,1);
+                                border-radius:0.4rem;
+                            }
+                            .button-del{
+                                width:1.6rem;
+                                height:0.83rem;
+                                line-height 0.83rem;
+                                text-align center;
+                                border:1px solid rgba(234,55,86,1);
+                                border-radius:0.4rem;
+                                color #EA3756;
+                                box-sizing border-box;
+                                margin-left .2rem;
+                            }
+                        }
+                    }
+                }
+                .record-reject{
+                    width 9.15rem;
+                    padding .15rem 0;
+                    background:rgba(248,248,248,1);
+                    font-size:0.27rem;
+                    font-family:Source Han Sans CN;
+                    font-weight:400;
+                    color:rgba(234,55,86,1);
+                    margin .6rem 0 .3rem;
+                    border-radius .2rem;
+                    .record-reject-liyou{
+                        margin-left .2rem;
+                    }
+                }
+            }
+
+        }
+    }
 
 </style>

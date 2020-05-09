@@ -168,6 +168,14 @@ export default [
     // },
   },
   {
+    path: '/imagetext/case',
+    name: 'case',
+    component: () => import('../views/detail/imagetext/case'),
+    // meta: {
+    //   title: '营销推广案例详情'
+    // },
+  },
+  {
     path: '/imagetext/record',
     name: 'record',
     component: () => import('../views/detail/imagetext/record'),

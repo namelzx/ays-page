@@ -56,21 +56,25 @@
                 list:[
                     {
                         image_url:"https://kedand.oss-cn-beijing.aliyuncs.com/uploads/tu1.png",
+                        video:"movie.ogg",
                         desc:"十代雅阁爆改阿帕守护者S套 装改灯教程",
                         type:1,
                     },
                     {
                         image_url:"https://kedand.oss-cn-beijing.aliyuncs.com/uploads/tu2.png",
+                        video:"movie.ogg",
                         desc:"十代雅阁爆改阿帕守护者S套 装改灯教程2",
                         type:1,
                     },
                     {
                         image_url:"https://kedand.oss-cn-beijing.aliyuncs.com/uploads/tu3.png",
+                        video:"movie.ogg",
                         desc:"十代雅阁爆改阿帕守护者S套 装改灯教程3",
                         type:2,
                     },
                     {
                         image_url:"https://kedand.oss-cn-beijing.aliyuncs.com/uploads/tu1.png",
+                        video:"movie.ogg",
                         desc:"十代雅阁爆改阿帕守护者S套 装改灯教程",
                         type:1,
                     }
