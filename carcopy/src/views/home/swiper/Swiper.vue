@@ -9,7 +9,7 @@
     <div class="sw">
       <swiper :options="swiperOption">
         <swiper-slide class="sw_slide" v-for="(item,index) in imgList" :key="index">
-          <img :src="item.images_url" class="swiper-img" @click="toggle(item.type,item.url)" />
+          <img :src="item.images_url" class="swiper-img" @click="toggle(item.type,item.url,item.content)" />
         </swiper-slide>
       </swiper>
 
@@ -50,9 +50,14 @@ export default {
     };
   },
   methods: {
-    toggle(type, url) {
+    toggle(type, url,content) {
       if (type == 2) {
         this.$router.push(url);
+        console.log(111)
+      }
+      if(type==1){
+        let content = content
+        this.$router.push({path:'/heome/details',query:{content}})
       }
     }
   }

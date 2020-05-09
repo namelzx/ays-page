@@ -54,7 +54,7 @@ background-size: cover;"
             class="category-item"
             style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/official.png');background-position: center;
 background-size: cover;"
-            v-if="userInfo.role_tyoe===2"
+            v-if="userInfo.role_tyoe===1"
             @click="goToDetail('/imagetext')"
     >
       <p class="cate-title">营销推广</p>

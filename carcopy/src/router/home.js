@@ -33,6 +33,14 @@ export default [
         // }
     },
     {
+        path: '/home/details',
+        name: 'Details',
+        component: () => import('@/views/home/details.vue'),
+        // meta: {
+        //   title: '首页轮播详情'
+        // }
+    },
+    {
         path: '/about',
         name: 'about',
         component: () => import('../views/About.vue'),

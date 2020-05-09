@@ -159,6 +159,22 @@ export default [
         //   title: '图文上传'
         // },
     },
+  {
+    path: '/imagetext/seeklist',
+    name: 'seeklist',
+    component: () => import('../views/detail/imagetext/seeklist'),
+    // meta: {
+    //   title: '营销推广搜索结果'
+    // },
+  },
+  {
+    path: '/imagetext/record',
+    name: 'record',
+    component: () => import('../views/detail/imagetext/record'),
+    // meta: {
+    //   title: '营销推广记录'
+    // },
+  },
 
   {
     path: '/upload-video',
