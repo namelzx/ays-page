@@ -160,6 +160,30 @@ export default [
         // },
     },
   {
+    path: '/case',
+    name: 'case',
+    component: () => import('../views/case/Case'),
+    // meta: {
+    //   title: '我的案例-改装前'
+    // },
+  },
+  {
+    path: '/casecentre',
+    name: 'casecentre',
+    component: () => import('../views/case/CaseCentre'),
+    // meta: {
+    //   title: '我的案例-改装中'
+    // },
+  },
+  {
+    path: '/caseover',
+    name: 'caseover',
+    component: () => import('../views/case/CaseOver'),
+    // meta: {
+    //   title: '我的案例-改装后'
+    // },
+  },
+  {
     path: '/imagetext/seeklist',
     name: 'seeklist',
     component: () => import('../views/detail/imagetext/seeklist'),

@@ -63,7 +63,6 @@ export default {
         column-count:2;
         column-gap: .35rem;
         column-width:4.37rem;
-
         .mar_item{
             break-inside: avoid;
             float:left;
