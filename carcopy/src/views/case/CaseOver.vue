@@ -1,5 +1,6 @@
 <template>
-    <div class="case" :style="backgroundDiv">
+<!--    :style="backgroundDiv"-->
+    <div class="case">
         <div class="case_warp">
             <div class="imgs"><img src="@/assets/4-5.png"></div>
             <div class="title">案例图片上传</div>
@@ -12,7 +13,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -29,7 +30,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -46,7 +47,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -63,7 +64,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -97,7 +98,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -114,7 +115,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -151,12 +152,12 @@
                     { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
                     // Uploader 根据文件后缀来判断是否为图片文件
                 ],
-                backgroundDiv: {
-                    backgroundImage:"url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/timg.jpeg')",
-                    backgroundPosition: "center center",
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                }
+                // backgroundDiv: {
+                //     backgroundImage:"url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/timg.jpeg')",
+                //     backgroundPosition: "center center",
+                //     backgroundRepeat: "no-repeat",
+                //     backgroundSize: "cover",
+                // }
             }
         },
         methods:{
@@ -179,7 +180,7 @@
         height: 100%;
         width: 100%;
         .case_warp{
-            margin 2rem auto 0;
+            margin 1rem auto 0;
             width 9.15rem;
             min-height 10rem;
             background-color #ffffff;
