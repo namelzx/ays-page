@@ -113,6 +113,7 @@ export default {
         Tabbar
     },
     created(){
+        var that=this;
         this.user_id=this.userInfo.id
         let id=this.$route.params.id;
         if (id !== undefined) {
@@ -127,11 +128,15 @@ export default {
 
         }
 
-        this.getHomeData();
+        setTimeout(function () {
+            that.getHomeData();
+
+        },3000)
 
     },
     methods:{
         getHomeData(){
+            if(getUser){
             const strToObj = JSON.parse(getUser())
             this.user_id=strToObj.id;
 
@@ -147,6 +152,7 @@ export default {
                 }
 
             })
+            }
         },
         toMessage(){
             this.$router.push({path:'/message'})

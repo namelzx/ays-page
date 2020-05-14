@@ -25,11 +25,11 @@
         <!--   底部栏      -->
         <div class="marketing_base">
             <div class="base_waro">
-                <div class="base_waro_list">
+                <div class="base_waro_list" @click="toggleRetun()">
                     <img src="@/assets/icon_fatuwen.png">
                     <div class="name">发图文</div>
                 </div>
-                <div class="base_waro_list">
+                <div class="base_waro_list" @click="toggleRetun()">
                     <img src="@/assets/icon_fashiping.png">
                     <div class="name">发视频</div>
                 </div>
@@ -95,6 +95,9 @@
             //搜索结果
             toggleSeeklist() {
                 this.$router.push('/imagetext/seeklist')
+            },
+            toggleRetun() {
+                this.$router.push('/case')
             }
         }
     }
