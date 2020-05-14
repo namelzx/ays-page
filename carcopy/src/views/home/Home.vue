@@ -133,7 +133,6 @@
                     nd = user.id
                             that.$store.dispatch('user/login', user)
 
-                    console.log(nd,2)
                 }
 
             }

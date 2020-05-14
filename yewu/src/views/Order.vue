@@ -6,9 +6,7 @@
 
             <div class="Da-search">
                 <div class="search-tabs">
-                    <!--<div class="tabs-name" @click="toggleBar(index)" :class="{active:index==Tinum}"-->
-                    <!--v-for="(item,index) in bars" :key="index">{{item}}-->
-                    <!--</div>-->
+
                 </div>
                 <div class="searchBox" v-if="Tinum===0">
                     <div class="int" @click="toggleHistory">输入关键词搜索</div>
@@ -57,7 +55,9 @@
                 </div>
                 <!--  tab内容  -->
                 <div class="taborder">
-                    <Orderlist :orderlist="orderlist" :num="num"/>
+
+                    <Orderlist ref="order"   :orderlist="orderlist" :listQuery="listQuery" :num="num" @getQuery="getQuery"/>
+
                 </div>
             </div>
 
@@ -142,7 +142,7 @@
     import {GetDataByList, PostNoteByAdd} from "@/api/order";
     import {mapGetters} from "vuex";
     /* 订单状态   1待处理  2.待门店  3.待审核  4.驳回  5.已结算  */
-    import {Toast} from "vant";
+    import {Toast,List} from "vant";
     import {getUser, removeUser, setUser} from "@/utils/auth";
 
     export default {
@@ -151,6 +151,7 @@
             return {
                 persons: 0,
                 user_id: undefined,
+
                 listQuery: {
                     page: 1,
                     limit: 20,
@@ -225,6 +226,13 @@
             this.getinstlist();
         },
         methods: {
+            getDataTabe(res){
+                console.log(e)
+            },
+            getQuery(e){
+                console.log(e)
+               this.listQuery.page=e
+            },
             scroll(person) {
                 window.onscroll = () => {
                     // 距离底部200px时加载一次
@@ -249,13 +257,12 @@
                 this.orderlist = [];
                 this.listQuery.page = 1;
                 this.listQuery.status = e;
-
+                this.$refs.order.createlist()
                 this.getinstlist();
             },
             getinstlist() {
                 const strToObj = JSON.parse(getUser());
                 this.listQuery.user_id = strToObj.id;
-
                 GetDataByList(this.listQuery).then(res => {
                     for (let i = 0; i < res.data.data.length; i++) {
                         this.orderlist.push(res.data.data[i]);
@@ -269,7 +276,6 @@
                     for (let k = 0; k < coun.length; k++) {
                         this.tabs[0].total = this.tabs[0].total + coun[k].total;
                         this.tabs[coun[k].status].total = coun[k].total;
-
                         this.tabs[9].total = res.data.rejected;
                     }
                 });
@@ -282,6 +288,8 @@
                 } else {
                     this.listQuery.ordertype = 2;
                 }
+                this.listQuery.page=1
+                this.$refs.order.createlist()
                 this.$store.dispatch('user/settype', this.listQuery.ordertype)
                 this.orderlist = [];
 
@@ -311,7 +319,6 @@
             },
             toggleTaboffnum(index) {
                 this.offnum = index;
-
             },
             timeFormat(time) {
                 // 时间格式化 2019-09-08
@@ -326,7 +333,9 @@
             toggleTab(index) {
                 this.num = index;
                 this.listQuery.status = index
+                this.listQuery.page = 1
                 this.orderlist = [];
+                this.$refs.order.createlist()
                 this.getinstlist();
             },
 

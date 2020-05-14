@@ -1,24 +1,34 @@
 <template>
-    <div v-html="content"></div>
+    <div>
+        <div>1231231212312379878192</div>
+    </div>
 </template>
 
 <script>
+    import {GetBannerInfo} from '@/api/shop'
+
     export default {
         name: "details",
-        data(){
-            return{
-                content:""
+        data() {
+            return {
+                content: ""
             }
         },
-        created(){
+        created() {
+            console.log(1)
             this.getParams()
         },
-        methods:{
-            getParams(){
-                const content = this.$route.query.content
-                console.log(content,11000)
+        methods: {
+            getParams() {
+                const query = this.$route.query
+                console.log(query, 11000)
             }
-        }
+        },
+        watch:{
+            $route(to,from){
+                console.log(to.path);
+            }
+        },
     }
 </script>
 

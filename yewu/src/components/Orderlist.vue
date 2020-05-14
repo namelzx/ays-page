@@ -1,7 +1,12 @@
 <template>
   <div class="orderlist">
-
-      <div class="content" v-for="(item,index) in orderlist" :key="index" @click="Orderdetails(item.id)" >
+      <van-list
+              v-model="loading"
+              :finished="finished"
+              :finished-text="text"
+              @load="onLoad"
+      >
+      <div class="content" v-for="(item,index) in list" :key="index" @click="Orderdetails(item.id)" >
           <van-skeleton
         title
         animate
@@ -65,23 +70,63 @@
         </div>
         </van-skeleton>
       </div>
+      </van-list>
+
   </div>
 </template>
 
 <script>
-export default {
+    import {Toast,List} from "vant";
+    import {GetDataByList, PostNoteByAdd} from "@/api/order";
+
+    export default {
   name: 'Orderlist',
-  props:['orderlist','num'],
+  props:['orderlist','num','listQuery'],
   data() {
       return{
+          list:[],
+            text:'没有更多了',
+          finished: false,
          loading: true
       }
   },
+
   methods:{
+      onLoad(){
+          var that=this;
+          this.text='加载中'
+
+          setTimeout(() => {
+              GetDataByList(that.listQuery).then(res=>{
+                  for (let i = 0; i < res.data.data.length; i++) {
+                      that.list.push(res.data.data[i]);
+
+                  }
+                  that.loading = false;
+                  that.$emit('getQuery',that.listQuery.page+1)
+
+                  // 数据全部加载完成
+                  if (that.list.length >= res.data.total) {
+                      that.finished = true;
+                      that.text='没有更多了'
+                  }
+              })
+
+
+              // 加载状态结束
+
+          }, 1000);
+         console.log('加载')
+      },
       Orderdetails(e) {
           let index = e;
           this.$router.push({path:'/order/Orderdetails',query:{index}})
-      }
+      },
+      createlist(){
+          this.list=[];
+          this.onLoad()
+          console.log('切换')
+      },
   },
   mounted() {
     setTimeout(function(){

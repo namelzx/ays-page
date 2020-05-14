@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vant/touch-emulator": "^1.1.0",
+    "ali-oss": "^6.7.0",
     "axios": "^0.19.2",
     "better-scroll": "^1.15.2",
     "core-js": "^3.6.4",

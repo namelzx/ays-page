@@ -1,5 +1,10 @@
 <template>
   <div class="voucher">
+    <van-popup v-model="show">
+      <van-loading size="24px">上传中...</van-loading>
+
+    </van-popup>
+
     <div @click="toggleRetun">
       <Toptitle :title="title" />
     </div>
@@ -44,11 +49,13 @@ import {GetIdBydetails,PostNoteByAdd,GetIdByStatus} from "@/api/order";
 import {getInfo, login} from '@/api/user'
 import { Toast } from 'vant';
 import {mapGetters} from "vuex";
+import { Popup ,Loading} from 'vant';
 
 export default {
   name: "Voucher",
   data() {
     return {
+      show:false,
       title: "确认安装",
       fileList: [],
         is_send:true,
@@ -97,6 +104,7 @@ export default {
     },
   methods: {
       afterRead(file) {
+        this.show=true
           let url = myconfig.uploadUrl.img
           let fd = new FormData()
           fd.append('file', file.file)
@@ -105,6 +113,7 @@ export default {
                   'Content-Type': 'multipart/form-data'
               }
           }).then(res => {
+            this.show=false
               this.postFrom.credentials=res.data.data
           }).catch(err => {
               alert(err)
@@ -276,6 +285,9 @@ export default {
     color: #fff;
     background: #EA3756;
     border-radius:1rem;
+  }
+  .van-popup{
+    background:none !important;
   }
 }
 </style>

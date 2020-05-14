@@ -33,9 +33,9 @@ export default [
         // }
     },
     {
-        path: '/home/details',
-        name: 'Details',
-        component: () => import('@/views/home/details.vue'),
+        path: '/banner',
+        name: 'bannerinfo',
+        component: () => import('@/views/banner/index.vue'),
         // meta: {
         //   title: '首页轮播详情'
         // }

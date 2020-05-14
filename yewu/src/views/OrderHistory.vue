@@ -48,7 +48,7 @@
             </div>
           </div>
         </div>
-        <Orderlist :orderlist="orderlist" :num="num" />
+        <Orderlist :orderlist="orderlist" :listQuery="listQuery" :num="num" @getQuery="getQuery" />
       </div>
 
       <!-- 如果搜索没有对应的数据 -->
@@ -95,160 +95,7 @@ export default {
         { id: 3, name: "别克君威2017" }
       ],
       orderlist: [
-        {
-          money: 800.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "待确认(业务)",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 1,
-          progress: 1,
-          all:0
-        },
-        {
-          money: 800.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "待确认(门店)",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 2,
-          progress: 1,
-          all:0
-        },
-        {
-          money: 600.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "待安装",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 3,
-          progress: 1,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "待审核",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 3,
-          progress: 2,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "已安装",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 4,
-          progress: 0,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "财审1",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 5,
-          progress: 0,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "财审2",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 6,
-          progress: 0,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "待结算",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 7,
-          progress: 0,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "已结算",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 8,
-          progress: 0,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "驳回",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 9,
-          progress: 0,
-          all:0
-        },
-        {
-          money: 680.0,
-          time: "2019.08.08  12:00",
-          numbers: 5502,
-          states: "退货",
-          product: "征服者S",
-          model: "别克2017君威1.5t精英版",
-          service: "安亿仕13755555555",
-          trade: "阿帕车灯（凯斯店） 姜卫卫",
-          explain: "客服说明明细",
-          schedule: 10,
-          progress: 0,
-          all:0
-        }
+
       ],
       list: [],
         listQuery:{
@@ -276,6 +123,9 @@ export default {
       console.log(this.ordertype)
     },
   methods: {
+    getQuery(e){
+      this.listQuery.page=e
+    },
     toggleGra(name) {
       this.name = name;
         this.listQuery.user_id=this.userInfo.id

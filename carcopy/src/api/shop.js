@@ -152,6 +152,18 @@ export function Gethomebanner() {
 }
 
 
+//home轮播图
+export function GetBannerInfo(id) {
+    return request({
+        url: 'home/GetBannerInfo',
+        method: 'get',
+        params:{id}
+    })
+}
+
+
+
+
 //
 // export function PostDataByfield(data) {
 //     return request({
