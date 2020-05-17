@@ -144,7 +144,6 @@
             <van-icon name="arrow-left" @click="clickToBack(2)" />
           </div>
           <div class="stick" v-if="isScroll && carsubscript===1">{{alphabet}}</div>
-
           <!-- 字母列表  -->
           <div class="letter" v-if="carsubscript===1" ref="letterHeight">
             <div
@@ -174,7 +173,6 @@
               </div>
             </div>
           </div>
-
           <div class="prlist wrappers2 wrappers" v-if="carsubscript===2" ref="wrappers">
             <div>
               <div
@@ -185,7 +183,6 @@
               >{{item.series_name}}</div>
             </div>
           </div>
-
           <div class="prlist wrappers2 wrappers" v-if="carsubscript===3" ref="wrappers">
             <div>
               <div
@@ -201,7 +198,7 @@
           </div>
         </div>
       </div>
-    </div>
+       </div>
 
     <div class="bm" v-if="!opneCars&&!showAddress">
       <div class="post-btn" @click="clickToPost">提交</div>
@@ -528,6 +525,7 @@ export default {
     Controlcar(row) {
       this.carbrand = row.name;
       this.postData.brand_id = row.brandid;
+      console.log(row)
       GetIdBySeries(row.brandid).then(res => {
         this.carlist2 = res.data;
       });
@@ -564,7 +562,6 @@ export default {
     },
     clickToPost() {
       let postData = this.postData;
-
       postData.openid = this.uinfo.openid;
       if (postData.buy_order_no === "") {
         this.$toast("请填写订单号码");

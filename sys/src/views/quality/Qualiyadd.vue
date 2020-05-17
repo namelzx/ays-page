@@ -73,7 +73,7 @@ export default {
     .QualiyaddHe{
         width: 9.15rem;
         height: 3.63rem;
-        margin: 0.5rem auto 0;
+        margin: 1rem auto 0;
         overflow: hidden;
         border-radius: 0.13rem;
         background-color: #ffffff;

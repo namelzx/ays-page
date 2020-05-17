@@ -57,8 +57,8 @@
   },
     methods:{
         handelUrl(url){
-            // this.$router.push(url)
-            Toast('此板块暂未开放')
+            this.$router.push(url)
+            // Toast('此板块暂未开放')
         }
     },
 }
