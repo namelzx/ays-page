@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d2106a8"],{b895:function(n,e,t){"use strict";t.r(e);var o=function(){var n=this,e=n.$createElement,t=n._self._c||e;return t("div")},c=[],a={name:"case",methods:{open:function(){window.location.href="http://www.baidu.com"}},created:function(){this.open()}},i=a,u=t("2877"),s=Object(u["a"])(i,o,c,!1,null,"43809839",null);e["default"]=s.exports}}]);
-//# sourceMappingURL=chunk-2d2106a8.de4755fe.js.map

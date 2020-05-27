@@ -56,7 +56,8 @@
                 <!--  tab内容  -->
                 <div class="taborder">
 
-                    <Orderlist ref="order"   :orderlist="orderlist" :listQuery="listQuery" :num="num" @getQuery="getQuery"/>
+                    <Orderlist ref="order" :orderlist="orderlist" :listQuery="listQuery" :num="num"
+                               @getQuery="getQuery"/>
 
                 </div>
             </div>
@@ -79,6 +80,16 @@
                 <div class="name">我的</div>
                 <div class="heng"></div>
             </div>
+        </div>
+
+        <div class="install" style="margin-top: 1rem">
+            <div class="install-Box"
+                 @click="handeldownload">
+                <img src="@/assets/install.png"/>
+                <div class="name">导出</div>
+                <div class="heng"></div>
+            </div>
+
         </div>
 
         <!--  日期 -->
@@ -140,9 +151,12 @@
     import Orderlist from "@/components/Orderlist";
     import Offorderlist from "@/components/Offoreder/Offorderlist";
     import {GetDataByList, PostNoteByAdd} from "@/api/order";
+    import {GetQueryBydownload} from "@/api/data";
+    import {Dialog} from 'vant';
+
     import {mapGetters} from "vuex";
     /* 订单状态   1待处理  2.待门店  3.待审核  4.驳回  5.已结算  */
-    import {Toast,List} from "vant";
+    import {Toast, List} from "vant";
     import {getUser, removeUser, setUser} from "@/utils/auth";
 
     export default {
@@ -215,7 +229,7 @@
                 this.know_show = false
 
             }
-            this.listQuery.ordertype=this.ordertype
+            this.listQuery.ordertype = this.ordertype
             this.user_id = this.userInfo.id;
             this.listQuery.user_id = this.userInfo.id;
             if (this.$route.query.num !== undefined) {
@@ -226,12 +240,22 @@
             this.getinstlist();
         },
         methods: {
-            getDataTabe(res){
+
+            onCopy() {
+                this.$message({
+                    message: `复制成功！`,
+                    type: 'success'
+                });
+                this.snackBar.info(this.$t('prompt.copySuccess'))
+            },
+            onError() {
+                this.$message.error(this.$t('prompt.copyFail'))
+            },
+            getDataTabe(res) {
                 console.log(e)
             },
-            getQuery(e){
-                console.log(e)
-               this.listQuery.page=e
+            getQuery(e) {
+                this.listQuery.page = e
             },
             scroll(person) {
                 window.onscroll = () => {
@@ -252,7 +276,6 @@
                     }
                 };
             },
-
             handelTabs(e) {
                 this.orderlist = [];
                 this.listQuery.page = 1;
@@ -280,6 +303,29 @@
                     }
                 });
             },
+            handeldownload() {
+                const strToObj = JSON.parse(getUser());
+                Dialog.confirm({
+                    title: '导出订单',
+                    message: '是否打开导入链接?如手机不支持直接导出,请打开链接后自行复制链接到电脑浏览器打开',
+                })
+                    .then(() => {
+                        console.log('导出');
+                        let url='http://pd.aesups.com/api/sele/data/GetQueryBydownload?user_id='+strToObj.id
+                        window.open(url);
+
+
+                    })
+                    .catch(() => {
+                        console.log('导出');
+                        // on cancel
+                    });
+
+                // GetQueryBydownload(temp).then(res => {
+                //     console.log(res)
+                // })
+            },
+
             knowShow() {
                 //切换知晓跟我的数据
                 this.know_show = !this.know_show;
@@ -288,7 +334,7 @@
                 } else {
                     this.listQuery.ordertype = 2;
                 }
-                this.listQuery.page=1
+                this.listQuery.page = 1
                 this.$refs.order.createlist()
                 this.$store.dispatch('user/settype', this.listQuery.ordertype)
                 this.orderlist = [];
@@ -385,6 +431,7 @@
             right: 0;
             padding-bottom: 0.2rem;
             z-index: 10;
+
             .search-tabs {
                 font-size: 0.32rem;
                 font-family: Source Han Sans CN;
@@ -393,15 +440,18 @@
                 display: flex;
                 justify-content: space-between;
                 margin: 0.1rem auto 0.6rem;
+
                 .tabs-name {
                     color: #999999;
                     width: 1.3rem;
                     text-align: center;
                 }
+
                 .tabs-name.active {
                     color: #333333;
                     position: relative;
                 }
+
                 .tabs-name.active:before {
                     position: absolute;
                     content: "";
@@ -414,6 +464,7 @@
                     background: #333;
                 }
             }
+
             .searchBox {
                 width: 9.15rem;
                 margin: 0 auto;
@@ -421,6 +472,7 @@
                 justify-content: space-between;
                 height: 0.83rem;
                 align-items: center;
+
                 .int {
                     width: 8rem;
                     height: 0.83rem;
@@ -433,15 +485,18 @@
                     font-weight: 400;
                     color: rgba(153, 153, 153, 1);
                 }
+
                 .calendar {
                     width: 0.64rem;
                     height: 0.64rem;
+
                     img {
                         width: 100%;
                         height: 100%;
                     }
                 }
             }
+
             .inpmark {
                 position: fixed;
                 left: 0;
@@ -449,6 +504,7 @@
                 top: 1.5rem;
                 padding-bottom: 0.3rem;
                 background: #ffffff;
+
                 .inpmark_warp {
                     margin: 0 auto;
                     width: 9.15rem;
@@ -462,9 +518,11 @@
                     font-weight: 400;
                     color: rgba(153, 153, 153, 1);
                 }
+
                 .Tabslist {
                     width: 10rem;
                     vertical-align: bottom !important;
+
                     .TabslistBox {
                         margin: 0 auto;
                         width: 9.15rem;
@@ -473,12 +531,14 @@
                         height: 1.2rem;
                         line-height: 1.2rem;
                         position: relative;
+
                         .tab-btn {
                             font-size: 0.4rem;
                             font-family: Source Han Sans CN;
                             font-weight: 400;
                             color: #999999;
                         }
+
                         .tab-btn.active {
                             color: #333333;
                             font-size: 0.48rem;
@@ -486,6 +546,7 @@
                             font-weight: 500;
                             position: relative;
                         }
+
                         .tab-btn.active:before {
                             position: absolute;
                             content: "";
@@ -501,8 +562,10 @@
                 }
             }
         }
+
         .Tabs {
             width: 9.15rem;
+
             .Tabslist {
                 position: fixed;
                 width: 10rem;
@@ -519,16 +582,19 @@
                     height: 1.3rem;
                     background: #ffffff;
                     z-index: 11;
+
                     .tab-class-imgs {
                         margin: 0.3rem auto 0;
                         width: 0.64rem;
                         height: 0.64rem;
+
                         img {
                             width: 100%;
                             height: 100%;
                         }
                     }
                 }
+
                 .nav_bar {
                     display: flex;
                     overflow-y: auto; /*可滑动*/
@@ -537,15 +603,18 @@
                     margin-right: 1rem;
                     height: 1.2rem;
                     line-height: 1.2rem;
+
                     .bar_item {
                         font-size: 0.4rem;
                         font-family: Source Han Sans CN;
                         font-weight: 400;
                         margin-left: 0.3rem;
                     }
+
                     .bar_item span {
                         margin-left: 0.1rem;
                     }
+
                     .bar_item_active {
                         font-size: 0.48rem;
                         font-family: Source Han Sans CN;
@@ -554,15 +623,19 @@
                         margin-left: 0.3rem;
                         position: relative;
                     }
+
                     .bar_item_active span {
                         margin-left: 0.1rem;
                     }
+
                     .bar_item_active span:nth-child(1) {
                         color: #333;
                     }
+
                     .bar_item_active span:nth-child(2) {
                         color: #ea3756;
                     }
+
                     .bar_item_active::before {
                         position: absolute;
                         content: "";
@@ -577,25 +650,30 @@
                         transition: all 1s;
                     }
                 }
+
                 /deep/ .van-tabs--line .van-tabs__wrap {
                     margin-right: 1rem;
                 }
+
                 /deep/ .van-tab {
                     font-size: 0.4rem;
                     font-family: Source Han Sans CN;
                     font-weight: 400;
                     margin-left: 0.3rem;
                 }
+
                 /deep/ .van-tab--active {
                     font-size: 0.48rem;
                     font-family: Source Han Sans CN;
                     font-weight: 500;
                 }
             }
+
             .taborder {
                 margin-top: 3.6rem;
             }
         }
+
         .marketing {
             margin-top: 3.5rem;
             padding-bottom: 1.5rem;
@@ -609,15 +687,18 @@
         right: 0.23rem;
         width: 0.96rem;
         z-index: 10;
+
         .install-Box {
             width: 0.96rem;
             height: 0.96rem;
             position: relative;
             margin-top: 0.4rem;
+
             img {
                 width: 100%;
                 height: 100%;
             }
+
             .name {
                 position: absolute;
                 top: 0;
@@ -630,6 +711,7 @@
                 color: #ffffff;
                 font-size: 0.32rem;
             }
+
             .heng {
                 position: absolute;
                 top: 0.75rem;
@@ -647,17 +729,20 @@
             width: 10rem;
             margin-top: 0.5rem;
             height: 2rem;
+
             .times-title {
                 text-align: center;
                 font-size: 0.4rem;
                 color: #333333;
             }
+
             .times-day {
                 margin: 0 auto;
                 width: 7rem;
                 display: flex;
                 justify-content: space-between;
                 color: #999999;
+
                 .day-start {
                     text-align: center;
                     width: 2.13rem;
@@ -666,12 +751,14 @@
                     font-size: 0.37rem;
                     border-bottom: 1px solid rgba(220, 220, 220, 1);
                 }
+
                 .day-suspend {
                     width: 0.6rem;
                     height: 1px;
                     background: #333333;
                     margin-top: 0.4rem;
                 }
+
                 .day-end {
                     text-align: center;
                     width: 2.13rem;
@@ -682,6 +769,7 @@
                 }
             }
         }
+
         .operation {
             width: 8.5rem;
             margin: 0.8rem auto 0;
@@ -693,6 +781,7 @@
             color: #333333;
             font-size: 0.48rem;
             align-items: center;
+
             .open-cancel {
                 width: 3.89rem;
                 height: 1.09rem;
@@ -705,6 +794,7 @@
                 font-weight: 400;
                 color: rgba(234, 55, 86, 1);
             }
+
             .open-okbtn {
                 width: 3.89rem;
                 height: 1.09rem;
@@ -728,6 +818,7 @@
         right: 0;
         background: rgba(0, 0, 0, 0.3);
         z-index: 20;
+
         .class_warp {
             position: absolute;
             left: 0;
@@ -739,19 +830,23 @@
             width: 9.15rem;
             height: 5rem;
             border-radius: 0.27rem;
+
             .warp-icon {
                 position: absolute;
                 top: -0.3rem;
                 right: 0.2rem;
                 width: 0.6rem;
                 height: 0.6rem;
+
                 img {
                     width: 100%;
                     height: 100%;
                 }
             }
+
             .warp_list {
                 margin: 0.6rem;
+
                 .list_name {
                     float: left;
                     flex-wrap: wrap;
@@ -762,9 +857,11 @@
                     color: rgba(51, 51, 51, 1);
                     padding-bottom: 0.45rem;
                 }
+
                 .list_name:nth-child(3n + 2) {
                     padding-left: 0.3rem;
                 }
+
                 .list_name:nth-child(3n + 3) {
                     padding-left: 1rem;
                 }
@@ -814,21 +911,25 @@
 
     .popup {
         padding-bottom: 0.8rem;
+
         .times {
             width: 10rem;
             margin-top: 0.5rem;
             height: 2rem;
+
             .times-title {
                 text-align: center;
                 font-size: 0.4rem;
                 color: #333333;
             }
+
             .times-day {
                 margin: 0 auto;
                 width: 7rem;
                 display: flex;
                 justify-content: space-between;
                 color: #999999;
+
                 .day-start {
                     text-align: center;
                     width: 2.13rem;
@@ -838,12 +939,14 @@
                     font-size: 0.37rem;
                     border-bottom: 1px solid rgba(220, 220, 220, 1);
                 }
+
                 .day-suspend {
                     width: 0.6rem;
                     height: 1px;
                     background: #333333;
                     margin-top: 0.4rem;
                 }
+
                 .day-end {
                     text-align: center;
                     width: 2.13rem;
@@ -855,6 +958,7 @@
                 }
             }
         }
+
         .operation {
             width: 8.5rem;
             margin: 0.2rem auto 0;
@@ -864,6 +968,7 @@
             justify-content: space-between;
             font-size: 0.4rem;
             align-items: center;
+
             .open-on {
                 width: 3.89rem;
                 height: 1.09rem;
@@ -874,6 +979,7 @@
                 color: #ea3756;
                 margin-top: 30px;
             }
+
             .on-ok {
                 background: #ea3756;
                 color: #ffffff;
@@ -887,34 +993,41 @@
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
+
         .data-count {
             font-size: 0.32rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
             color: #333333;
+
             span {
                 color: #cd4b4c;
                 margin: 0 0.1rem;
             }
         }
+
         .data-day {
             color: #666666;
             font-size: 0.27rem;
             font-family: Source Han Sans CN;
             font-weight: 400;
+
             .day-time {
                 margin-left: 0.1rem;
             }
         }
+
         .data-eliminate {
             color: #666666;
             font-size: 0.32rem;
             display: flex;
+
             .eliminate-icon {
                 width: 0.32rem;
                 height: 0.32rem;
                 margin-right: 0.25rem;
                 margin-top: 0.04rem;
+
                 img {
                     width: 100%;
                     height: 100%;

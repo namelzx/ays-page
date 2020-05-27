@@ -127,7 +127,9 @@
         >尊敬的车主，请正确填写完善以上信息，方便我们更准确为您提供优质的安装服务，填写不完整或者不正确，可能会影响到安装服务的质量，谢谢配合！</div>
       </div>
       <div class="adv-banner">
-        <img src="https://kedand.oss-cn-beijing.aliyuncs.com/uploads/adv-banner.png" alt />
+        <a :href="banner.url">
+        <img :src="banner.images_url" alt />
+        </a>
       </div>
 
       <Address v-if="showAddress" :areaJson="areaJson" @toggleAddress="toggleAddress"></Address>
@@ -217,7 +219,7 @@ import { getInfo, login } from "@/api/user";
 
 import areaList from "@/assets/js/area.js";
 import { Getcar, GetIdByModel, GetIdBySeries } from "@/api/car";
-import { PostDataByAdd } from "@/api/order";
+import { PostDataByAdd ,GetAB} from "@/api/order";
 
 import { getUser, removeUser, setUser } from "@/utils/auth";
 
@@ -270,7 +272,8 @@ export default {
         city_desc: "",
         number_plate: "",
         car_model: ""
-      }
+      },
+      banner:{},
     };
   },
   computed: {
@@ -292,6 +295,10 @@ export default {
     ...mapGetters(["userInfo"])
   },
   created() {
+    GetAB().then(res=>{
+      console.log(res)
+      this.banner=res.data
+    })
     document.addEventListener("WeixinJSBridgeReady", function onBridgeReady() {
       // 通过下面这个API隐藏底部导航栏
       WeixinJSBridge.call("hideToolbar");

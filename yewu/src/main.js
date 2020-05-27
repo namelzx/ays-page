@@ -7,7 +7,8 @@ import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 import 'vant/lib/index.css';
 import 'lib-flexible' //rem
-
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
 
 Vue.config.productionTip = false
 Vue.use(Vant);

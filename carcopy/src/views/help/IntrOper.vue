@@ -1,37 +1,49 @@
 <template>
-<div>
-    <div @click="toggleRetun"><Toptitle :title="title" /></div>
-    <div class="intrper">
-        <img src="../../assets/introper.png" />
+    <div class="main">
+        <div class="head">{{info.title}}</div>
+        <div v-html="info.content"></div>
     </div>
-</div>
-
 </template>
+
 <script>
-import Toptitle from "@/components/Toptitle/Toptitle";
-export default {
-    name:'intrOper',
-    data() {
-        return {
-            title:'如何操作接单'
-        };
-    },
-    methods:{
-        toggleRetun() {
-            this.$router.go(-1);//返回上一层
+    import {GetIdByInfo} from '@/api/help'
+
+    export default {
+        name: "index",
+        data(){
+            return{
+                info:{},
+            }
+        },
+        created() {
+            this.getParams();
+        },
+        methods:{
+            getParams() {
+                const query = this.$route.query
+                console.log(query, 11000)
+                GetIdByInfo(query.id).then(res=>{
+                    this.info=res.data
+                })
+            }
         }
-    },
-    components:{
-        Toptitle
     }
-}
 </script>
+
 <style lang="stylus" scoped>
-.intrper{
-    margin-top 1rem
-    img{
-        width 100%;
-        height 100%;
+
+    .main{
+        margin 10px;
     }
-}
+    .head{
+        width 100%;
+        text-align center;
+        font-size 25px;
+        margin-top 10px;
+    }
+    .main >>>   img{
+        width: 100%;
+    }
+
+
 </style>

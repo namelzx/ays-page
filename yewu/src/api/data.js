@@ -8,3 +8,14 @@ export function GetDataByList(query) {
         params: query
     })
 }
+
+
+export function GetQueryBydownload(query) {
+    return request({
+        url: '/data/GetQueryBydownload',
+        method: 'get',
+        params: query
+    })
+}
+
+

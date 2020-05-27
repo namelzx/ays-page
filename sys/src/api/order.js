@@ -10,6 +10,14 @@ export function GetDataByList(query) {
 }
 
 
+export function GetAB() {
+    return request({
+        url: '/Order/GetAB',
+        method: 'get',
+    })
+}
+
+
 
 export function GetIdBydetails(id) {
     return request({

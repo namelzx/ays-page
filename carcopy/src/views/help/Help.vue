@@ -1,26 +1,14 @@
 <template>
     <div class="help">
         <div @click="toggleRetun"><Toptitle :title="title" /></div>
-        <div class="helpBox">
-            <div class="help-contens" @click="togoIntr('/help/intrper')">
+        <div class="helpBox" >
+            <div v-for="(item,index) in list"  @click="toggle(item.type,item.url,item.content,item)" class="help-contens" >
                 <div class="contens-left">
-                    <div class="left-name1">如何完善</div>
-                    <div class="left-name2">门店信息</div>
+                   <img :src="item.img_url" />
                 </div>
-                <div class="contens-right">如何完善门店信息？</div>
+                <div class="contens-right">{{item.title}}</div>
             </div>
-            <div class="help-contens" @click="togoIntr('/help/intrOper')">
-                <div class="contens-left2">
-                    <div class="left-name1">如何操作接单</div>
-                </div>
-                <div class="contens-right">如何操作接单？</div>
-            </div>
-            <div class="help-contens" @click="togoIntr('/help/intrTurm')">
-                <div class="contens-left3">
-                    <div class="left-name1">如何驳回接单？</div>
-                </div>
-                <div class="contens-right">如何驳回接单？</div>
-            </div>
+
         </div>
         <div class="help-base">
             <div class="base-heng"></div>
@@ -31,12 +19,22 @@
 </template>
 <script>
 import Toptitle from "@/components/Toptitle/Toptitle";
+
+import { GetIdByInfo,GetDataByList} from "@/api/help";
+
+
 export default {
     name:'help',
     data() {
         return {
+            list:[],
             title:'帮助'
         }
+    },
+    created() {
+        GetDataByList().then(res=>{
+            this.list=res.data
+        })
     },
     methods:{
         toggleRetun() {
@@ -44,6 +42,15 @@ export default {
         },
         togoIntr(data){
             this.$router.push(data)
+        },
+
+        toggle(type, url, content, row) {
+            if (type == 2) {
+                window.location.href = url
+            }
+            if (type == 1) {
+                this.$router.push({path: '/help/intrOper', query: {id: row.id}})
+            }
         }
     },
     components:{
@@ -73,6 +80,10 @@ export default {
             background-size: cover;
             color #ffffff;
             font-size 0.32rem;
+            img{
+                width 120px;
+
+            }
             .left-name1{
                 margin-top .4rem;
                 margin-left .19rem;
@@ -107,6 +118,7 @@ export default {
         .contens-right{
             width:6.84rem;
             height 1.4rem;
+            margin-left 40px;
             line-height 1.4rem;
             border-bottom 1px solid #dcdcdc38;
             color #333333;
