@@ -137,7 +137,6 @@
 
             }
             if (nd !== undefined) {
-                console.log(nd,3)
                 GetDataByList(nd).then(res => {
                     that.shop = res.data;
                     if (res.data == 3) {

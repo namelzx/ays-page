@@ -5,8 +5,7 @@
             <Toptitle :title="title" />
         </div>
         <div class="QualiyaddHe">
-            <div class="qu-title">添加质保卡</div>
-            
+
             <div class="qu-coding">
                 <div class="coding-title">质保编码</div>
                 <input placeholder="请输入编码" v-model="value" />
@@ -24,6 +23,7 @@
 </template>
 <script>
 import Toptitle from "@/components/Toptitle/Toptitle";
+import {GetCodebyCheck} from '@/api/code'
 export default {
     name:'Qualiyadd',
     data () {
@@ -48,13 +48,22 @@ export default {
                 this.$toast('请输入质保编码！');
             }
             else{
-                if(this.value==='9527'){
-                    let value = this.value;
-                    this.$router.push({path:'/quality/qualiyadd/qualityfill',query:{value}})
-                }
-                else{
-                    this.show_error = true
-                }
+                GetCodebyCheck(this.value).then(res=>{
+                    console.log(res)
+                    let value=this.value
+                    if(res.code===10001){
+                        this.show_error = true
+                        return
+                    }else{
+                            this.$router.push({path:'/quality/qualiyadd/qualityfill',query:{value}})
+                    }
+                })
+                // if(this.value==='9527'){
+                //     let value = this.value;
+                // }
+                // else{
+                //     this.show_error = true
+                // }
                 
             }
         }

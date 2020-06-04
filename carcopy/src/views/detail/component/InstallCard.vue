@@ -45,32 +45,33 @@
                             <!--<span class="type"></span>-->
                         </div>
                     </template>
-                    <!--<div v-if="item.eva_info">-->
-                        <!--<div class="rate" v-if="item.is_eva===1"-->
-                             <!--@click.stop="clickRate(item.id)">评价-->
-                        <!--</div>-->
-                    <!--</div>-->
+                    <div v-if="item.eva_info">
+                        <div class="rate" v-if="item.is_eva===1"
+                             @click.stop="clickRate(item.id)">评价
+                        </div>
+                    </div>
                     <!--<div v-else>-->
                         <!--<div class="nrate" v-if="item.status==='待审核'||item.status==='已结算'||item.status==='已评价'"-->
                         <!--&gt;评价-->
                         <!--</div>-->
                     <!--</div>-->
                 </div>
-                <!--<div class="rate-content" v-if="item.is_eva===1">-->
-                    <!--<div class="star">-->
-                        <!--<van-rate color="#FF5861" void-color="#eee" readonly :value="item.eva_info.score"/>-->
-                        <!--<div class="star_name">{{item.eva_info.score}}分</div>-->
-                    <!--</div>-->
-                    <!--<div class="rate-text">-->
-                        <!--<span>{{item.eva_info.content}}</span>-->
-                    <!--</div>-->
-                    <!--<div class="img-list">-->
-                        <!--<div class="img-item" v-for="pic of item.eva_info.img_list">-->
-                            <!--<img :src="pic" alt=""/>-->
-                        <!--</div>-->
-                    <!--</div>-->
+                <div class="rate-content" v-if="curRate===item.id&&showRate">
 
-                <!--</div>-->
+                    <div class="star">
+                        <van-rate color="#FF5861" void-color="#eee" readonly :value="item.eva_info.score"/>
+                        <div class="star_name">{{item.eva_info.score}}分</div>
+                    </div>
+                    <div class="rate-text">
+                        <span>{{item.eva_info.content}}</span>
+                    </div>
+                    <div class="img-list">
+                        <div class="img-item" v-for="pic of item.eva_info.img_list">
+                            <img :src="pic" alt=""/>
+                        </div>
+                    </div>
+
+                </div>
             </template>
         </div>
     </div>

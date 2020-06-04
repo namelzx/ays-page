@@ -9,10 +9,10 @@
                 <!--</div>-->
                 <div class="inputs">
                     <!-- <img src="../../assets/sou.png"> -->
-                    <input class="inp" placeholder="搜索" v-model="value" />
+                    <input class="inp" placeholder="搜索" @keyup.13="souClick(1)" v-model="value" />
                 </div>
-                <!--<div class="calendar" @click="souClick('搜索')" v-if="!showMes">搜索</div>-->
-                <!--<div class="calendar" @click="souClick('取消')" v-else>取消</div>-->
+<!--                <div class="calendar" @click="souClick('搜索')" v-if="!showMes">搜索</div>-->
+<!--                <div class="calendar" @click="souClick('取消')" v-else>取消</div>-->
             </div>
         </div>
 

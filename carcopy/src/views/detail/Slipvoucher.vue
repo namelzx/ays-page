@@ -89,8 +89,11 @@
             toggleInstall() {
                 if (this.postFrom.credentials !== "") {
                     GetIdByStatus(this.postFrom).then(res=>{
+                      if(res.code===10001){
+                        this.$toast(res.msg);
+                        return;
+                      }
                         this.$router.push('/slip-succ')
-                        // this.$router.push({ path: "/install", query: { id: 3 } });
 
                     })
                 }

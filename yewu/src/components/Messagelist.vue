@@ -86,26 +86,26 @@
         <div class="reject" v-if="conceal==2" @touchmove.prevent>
             <div class="rejectBox">
                 <div class="title">安装单：订单驳回信息</div>
-                <div class="feedback">您有一笔安装订单被驳回，请查收!</div>
+                <div class="feedback">{{info.desc}}</div>
                 <div class="shops">
                     <span class="shops-name">订单号：</span>
-                    <span class="shops-titles">666666</span>
+                    <span class="shops-titles">{{info.order_id}}</span>
                 </div>
                 <div class="shops">
                     <span class="shops-name">安装产品：</span>
-                    <span class="shops-titles">守护者S</span>
+                    <span class="shops-titles">{{info.product_title}}</span>
                 </div>
                 <div class="shops">
                     <span class="shops-name">车型：</span>
-                    <span class="shops-titles">本田飞度2018款</span>
+                    <span class="shops-titles">{{info.model_title}}</span>
                 </div>
                 <div class="shops">
                     <span class="shops-name">驳回原因：</span>
-                    <span class="shops-titles">近期没时间安装</span>
+                    <span class="shops-titles">{{info.content}}</span>
                 </div>
                 <div class="shops">
                     <span class="shops-name">驳回人：</span>
-                    <span class="shops-titles">张三 2019.08.08 18：00: 00</span>
+                    <span class="shops-titles">{{info.realName }}{{info.create_time|parseTime}}</span>
                 </div>
                 <div class="reject-query">如有疑问可联系电商客服！</div>
                 <div class="return-close" @click="toggleTab">关闭</div>
@@ -157,33 +157,34 @@
         </div>
 
         <!-- 用户评价信息  -->
+        <!-- 用户评价信息  -->
         <div class="evaluate" v-if="conceal==5" @touchmove.prevent>
             <div class="evaluateBox">
                 <div class="title">新安装单评价信息</div>
                 <div class="ev-xq">您的店铺服务非常好，车主给了您5星好评，请再接再励，用心服务好每个车主哦</div>
                 <div class="ev-odd">
                     <span>订单号：</span>
-                    <span class="odd2">6666</span>
+                    <span class="odd2">{{info.order_id}}</span>
                 </div>
                 <div class="ev-odd">
                     <span>店铺评分：</span>
-                    <span class="odd2">5分</span>
+                    <span class="odd2">{{info.eva.shop}}分</span>
                 </div>
                 <div class="ev-odd">
                     <span class="odd1">用户评价：</span>
-                    <span class="odd2">本田飞度2018款改灯大气服务周到还说话技术高无手尾值得推荐再接再砺</span>
+                    <span class="odd2">{{info.eva.content}}</span>
                 </div>
                 <!-- 图片  -->
                 <div class="ev-imgs">
-                    <img src="../assets/tuwen.png"/>
-                    <img src="../assets/tuwen.png"/>
-                    <img src="../assets/tuwen.png"/>
+                    <img v-for="item in imglist" :src="item"/>
+
                 </div>
                 <div class="ev-close">
                     <div class="close-left" @click="toggleTab">关闭</div>
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
@@ -193,6 +194,7 @@
         props: ["storelist"],
         data() {
             return {
+                imglist:[],
                 imgs: 2,
                 conceal: 0,
                 loading: true,
@@ -244,8 +246,12 @@
                 this.$router.push({path:'/order/Orderdetails',query:{index}})
             },
             popups(row) {
+                console.log(row)
                 this.conceal = row.type;
                 this.info = row
+                if(this.info.type==5){
+                    this.imglist=this.info.eva.img.split(',');
+                }
                 // this.ModalHelper.afterOpen();
             },
             toggleTab() {

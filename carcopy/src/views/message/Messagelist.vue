@@ -14,7 +14,7 @@
                         <div class="listms-ce">
                             <div class="ce-title">
                                 <div class="name">{{item.title}}</div>
-                                <div class="time">{{item.create_time|parseTime}}</div>
+                                <div class="time">{{item.create_time}}</div>
                             </div>
                             <div class="ce-details">{{item.desc}}</div>
                         </div>
@@ -49,7 +49,7 @@
 
                 <div class="order-odd">
                     <span>派单日期：</span>
-                    <span class="odd2">{{info.create_time|parseTime}}</span>
+                    <span class="odd2">{{info.create_time}}</span>
                 </div>
                 <div class="order-query">请尽快处理此单，如有疑问可联系电商客服！</div>
                 <div class="return-close">
@@ -60,35 +60,6 @@
         </div>
 
 
-        <!-- 订单驳回信息  -->
-        <div class="reject" v-if="conceal==2" @touchmove.prevent>
-            <div class="rejectBox">
-                <div class="title">安装单：订单驳回信息</div>
-                <div class="feedback">您有一笔安装订单被驳回，请查收!</div>
-                <div class="shops">
-                    <span class="shops-name">订单号：</span>
-                    <span class="shops-titles">666666</span>
-                </div>
-                <div class="shops">
-                    <span class="shops-name">安装产品：</span>
-                    <span class="shops-titles">守护者S</span>
-                </div>
-                <div class="shops">
-                    <span class="shops-name">车型：</span>
-                    <span class="shops-titles">本田飞度2018款</span>
-                </div>
-                <div class="shops">
-                    <span class="shops-name">驳回原因：</span>
-                    <span class="shops-titles">近期没时间安装</span>
-                </div>
-                <div class="shops">
-                    <span class="shops-name">驳回人：</span>
-                    <span class="shops-titles">张三 2019.08.08 18：00: 00</span>
-                </div>
-                <div class="reject-query">如有疑问可联系电商客服！</div>
-                <div class="return-close" @click="toggleTab">关闭</div>
-            </div>
-        </div>
 
         <!-- 订单退货信息  -->
         <div class="return" v-if="conceal==3" @touchmove.prevent>
@@ -97,19 +68,19 @@
                 <div class="return-xq">您有一笔安装订单已退货，此安装已取消！请 您知晓</div>
                 <div class="return-odd">
                     <span>订单号：</span>
-                    <span class="odd2">6666</span>
+                    <span class="odd2">{{info.order_id}}</span>
                 </div>
                 <div class="return-odd">
                     <span>安装产品：</span>
-                    <span class="odd2">守护者S</span>
+                    <span class="odd2">{{info.product_title}}</span>
                 </div>
                 <div class="return-odd">
                     <span>车型：</span>
-                    <span class="odd2">本田飞度2018款</span>
+                    <span class="odd2">{{info.model_title}}</span>
                 </div>
                 <div class="return-odd">
                     <span>取消时间：</span>
-                    <span class="odd2">2019.08.08 18：00</span>
+                    <span class="odd2">{{info.create_time}}</span>
                 </div>
                 <div class="return-query">如有疑问可联系电商客服！感谢您的支持与配合。</div>
                 <div class="return-close" @click="toggleTab">关闭</div>
@@ -118,19 +89,27 @@
 
 
         <!--门店审核通知弹窗  -->
-        <div class="audit" v-if="conceal==4" @touchmove.prevent>
+        <div class="audit" v-if="conceal==6||conceal==4" @touchmove.prevent>
             <div class="auditBox">
                 <div class="title">门店审核通知</div>
-                <div class="feedback">您的门店审核未通过，请修改您的信息!</div>
+                <div class="feedback">{{info.title}}</div>
                 <div class="shops">
                     <span class="shops-name">审核门店：</span>
-                    <span class="shops-titles">阿帕广州旗舰店</span>
+                    <span class="shops-titles">{{info.shopname}}</span>
                 </div>
                 <div class="shops">
                     <span class="shops-name">审核结果：</span>
-                    <span class="shops-titles">已通过</span>
+                    <span class="shops-titles">{{info.content}}</span>
                 </div>
-                <div class="shop-close" @click="toggleTab">关闭</div>
+                <div class="shop-close" @click="toggleTab">
+                    <div style="text-align: center;width: 50%">
+                        关闭
+                    </div>
+                    <div @click="toshop" v-if="conceal===6" style="text-align: center;width: 50%">
+                        修改信息
+                    </div>
+
+                </div>
             </div>
         </div>
 
@@ -141,21 +120,20 @@
                 <div class="ev-xq">您的店铺服务非常好，车主给了您5星好评，请再接再励，用心服务好每个车主哦</div>
                 <div class="ev-odd">
                     <span>订单号：</span>
-                    <span class="odd2">6666</span>
+                    <span class="odd2">{{info.order_id}}</span>
                 </div>
                 <div class="ev-odd">
                     <span>店铺评分：</span>
-                    <span class="odd2">5分</span>
+                    <span class="odd2">{{info.eva.shop}}分</span>
                 </div>
                 <div class="ev-odd">
                     <span class="odd1">用户评价：</span>
-                    <span class="odd2">本田飞度2018款改灯大气服务周到还说话技术高无手尾值得推荐再接再砺</span>
+                    <span class="odd2">{{info.eva.content}}</span>
                 </div>
                 <!-- 图片  -->
                 <div class="ev-imgs">
-                    <img src="../../assets/tuwen.png"/>
-                    <img src="../../assets/tuwen.png"/>
-                    <img src="../../assets/tuwen.png"/>
+                    <img v-for="item in imglist" :src="item"/>
+
                 </div>
                 <div class="ev-close">
                     <div class="close-left" @click="toggleTab">关闭</div>
@@ -174,6 +152,7 @@
         props: ["storelist"],
         data() {
             return {
+                imglist:'',
                 imgs: 2,
                 conceal: 0,
                 imgs: 2,
@@ -223,6 +202,9 @@
 
         },
         methods: {
+            toshop(){
+                this.$router.push("/add-shop"); // 动态跳转
+            },
             Orderdetails(id){
                 this.$router.push({path:'/order-detail',query:{id}})
             },
@@ -230,6 +212,9 @@
                 console.log(row)
                 this.conceal = row.type;
                 this.info=row
+                if(this.info.type==5){
+                    this.imglist=this.info.eva.img.split(',');
+                }
                 // this.ModalHelper.afterOpen();
             },
             toggleTab() {
@@ -450,17 +435,16 @@
                 }
             }
             .shop-close {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                right: 0;
+                /*position: absolute;*/
+                display:flex;
+                justify-content: space-between;
+                text-align: center;
                 height: 1.09rem;
                 line-height: 1.09rem;
                 border-top: 1px solid #DCDCDC;
                 text-align: center;
                 font-size: 0.4rem;
                 color: #000000;
-                display flex;
                 font-size: 0.4rem;
                 font-family: Source Han Sans CN;
                 font-weight: 400;

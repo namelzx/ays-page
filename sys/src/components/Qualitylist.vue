@@ -2,49 +2,44 @@
   <div class="qualitylist">
 
       <div class="list">
-          <div class="qulist" :style="backgroundDiv2" v-for="(item,index) in 1" :key="index">
+          <div class="qulist" :style="backgroundDiv2" v-for="(item,index) in list" :key="index">
             <van-skeleton
             title
+
             :row="3"
             :loading="loading"
             >
               <div class="qulist-s">
                 <div class="s-names">
                   <div class="names-left">
-                    <span>守护者S</span>
-                    <span class="left-time">2019.08.08</span>
+                    <span>{{item.product_title}}</span>
+                    <span class="left-time">{{item.buytime}}</span>
                   </div>
-                  <div class="names-right">5656566</div>
+                  <div class="names-right">{{item.code}}</div>
                 </div>
-                <div class="s-days">剩余：<span>265</span>天</div>
+                <div class="s-days">剩余：<span>{{item.day>0?item.day:'已过期'}}</span>天</div>
               </div>
               <div class="qulist-x">
                 <div class="x-left">
-                  <div class="xl-title">本田2016款飞度1.5L天窗版</div>
+                  <div class="xl-title">{{item.car_type}}</div>
                   <div>
-                    <span>陈勇</span>
-                    <span>13755555555</span>
+                    <span>{{item.user}}</span>
+                    <span>{{item.user_phone}}</span>
                   </div>
                   <div>
-                    <span>广东省</span>
-                    <span>广州市</span>
-                    <span>白云区</span>
+                    <span>{{item.user_address}}</span>
+
                   </div>
                 </div>
                 <div class="x-right">
                   <div class="xl-title">
-                    <span>阿帕车灯（凯斯店）</span>
-                    <span>姜卫卫</span>
+                    <span>{{item.shop_user}}</span>
+                    <span>{{item.shop_phone}}</span>
                   </div>
                   <div>
-                    <span>陈勇</span>
-                    <span>13755555555</span>
+                    <span>{{item.shop_address}}</span>
                   </div>
-                  <div>
-                    <span>广东省</span>
-                    <span>广州市</span>
-                    <span>白云区</span>
-                  </div>
+
                 </div>
               </div>
             </van-skeleton>
@@ -57,6 +52,14 @@
 <script>
 export default {
   name: 'Qualitylist',
+  props:{
+    list:{
+      type:Array,
+      default:(res=>{
+        return []
+      })
+    }
+  },
   // props:['qualitylist'],
   data() {
       return {
@@ -191,7 +194,7 @@ export default {
           }
       }
     }
-    
+
 }
 
 </style>

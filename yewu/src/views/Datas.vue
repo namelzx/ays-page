@@ -2,33 +2,38 @@
     <div class="Datas">
         <div class="DatasBox">
             <!--  Tab 标签页组件   -->
-            <van-tabs v-model="active">
-                <van-tab title="我的">
-                    <!-- 搜索框   --->
-                    <div class="Da-search">
-                        <div class="searchBox" @click="search">
-                            输入关键词搜索
-                        </div>
-                    </div>
-                    <div class="Stores">
+<!--            <van-tabs v-model="active">-->
+<!--                <van-tab >-->
+<!--                    &lt;!&ndash; 搜索框   -&ndash;&gt;-->
+<!--                    <div class="Da-search">-->
+<!--                        <div class="searchBox" @click="search">-->
+<!--                            输入关键词搜索-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="Stores">-->
 
-                        <!-- 列表  -->
-                        <Storelist :Storelist="Storelist"/>
-                    </div>
-                </van-tab>
-                <van-tab title="全部">
-                    <!-- 搜索框   --->
-                    <div class="Da-search">
-                        <div class="searchBox" @click="search">
-                            输入关键词搜索
-                        </div>
-                    </div>
-                    <div class="Stores">
-                        <!-- 列表  -->
-                        <Storelist :Storelist="Storelist"/>
-                    </div>
-                </van-tab>
-            </van-tabs>
+<!--                        &lt;!&ndash; 列表  &ndash;&gt;-->
+<!--                        <Storelist :Storelist="Storelist"/>-->
+<!--                    </div>-->
+<!--                </van-tab>-->
+<!--&lt;!&ndash;                <van-tab title="全部">&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash; 搜索框   -&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="Da-search">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <div class="searchBox" @click="search">&ndash;&gt;-->
+<!--&lt;!&ndash;                            输入关键词搜索&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="Stores">&ndash;&gt;-->
+<!--&lt;!&ndash;                        &lt;!&ndash; 列表  &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                        <Storelist :Storelist="Storelist"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </van-tab>&ndash;&gt;-->
+<!--            </van-tabs>-->
+            <div class="Stores">
+
+                <!-- 列表  -->
+                <Storelist :Storelist="Storelist"/>
+            </div>
         </div>
 
         <!-- 安装 官派  -->

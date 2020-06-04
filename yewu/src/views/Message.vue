@@ -82,6 +82,7 @@ export default {
         GetIdByList(temp).then(res=>{
             console.log(res)
             this.storelist=res.data
+
         })
     },
     methods:{
