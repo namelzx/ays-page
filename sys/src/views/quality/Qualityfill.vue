@@ -30,7 +30,8 @@
                     <div class="select-day">
                         <div class="dayBox">
                             <div class="title">购买日期</div>
-                            <input v-model="temp.buytime" @click="showTI" placeholder="如：2019-9-15"/>
+<!--                            <input v-model="temp.buytime" @click="showTI" placeholder="如：2019-9-15"/>-->
+                            <div class="dayBox_name" @click="showTI">{{temp.buytime}}</div>
                         </div>
                     </div>
                     <div class="select-day">
@@ -210,7 +211,7 @@
             <van-datetime-picker
                     @cancel="showtime=false"
                     @confirm="handelTime"
-                    v-model="temp.buytime"
+                    v-model="temporary_time"
                     :min-date="minDate"
                     :max-date="maxDate"
                     type="date"
@@ -249,8 +250,8 @@
                     plate: '',
                     shop_user: '',
                     shop_phone: '',
-
                 },
+                temporary_time:'',  //临时时间
                 showAddressType: 1,
                 sfShow: false,
                 district1: '',
@@ -311,14 +312,19 @@
             Citylist(1).then(res => {
                 this.areaJson = res.data;
             });
-
         },
         methods: {
             handelTime(e) {
-                console.log(e)
-                let d = this.GMTToStr(e)
+                let date = new Date(e);
+                let y = date.getFullYear();
+                let m = date.getMonth() + 1;
+                m = m < 10 ? ('0' + m) : m;
+                let d = date.getDate();
+                d = d < 10 ? ('0' + d) : d;
+                let buytime = y+'-'+ m +'-' + d
                 this.showtime = false
-                this.temp.buytime = d
+                this.temp.buytime = buytime
+                this.temporary_time = e
             },
             GMTToStr(time) {
                 let date = new Date(time)
@@ -328,6 +334,9 @@
                 return Str
             },
             showTI() {
+                console.log(this.temp.buytime)
+                // var date = new Date(this.temp.buytime);
+                // this.temp.buytime = date
                 this.showtime = !this.showtime
             },
             toggleAddressShow(type) {
@@ -433,9 +442,9 @@
     };
 </script>
 <style lang="scss" scoped>
-    .van-popup--bottom {
-        height: 7rem !important;
-    }
+    /*.van-popup--bottom {*/
+    /*    height: 100% !important;*/
+    /*}*/
 
     .quality {
         width: 10rem;
@@ -444,7 +453,7 @@
             margin-top: 0.3rem;
             width: 10rem;
             overflow: hidden;
-            margin-bottom: 5rem;
+            margin-bottom: 2rem;
 
             .Qu-product {
                 .product-title {
@@ -505,14 +514,22 @@
                                 font-size: 0.4rem;
                                 font-family: Source Han Sans CN;
                                 font-weight: 400;
+                                overflow: hidden;
+                                text-overflow:ellipsis;
+                                white-space: nowrap;
 
                                 .names-character {
-                                    width: 100%;
-
+                                    width: 7.5rem;
+                                    overflow: hidden;
+                                    text-overflow:ellipsis;
+                                    white-space: nowrap;
                                     span {
                                         display: inline-block;
                                         width: 100%;
                                         text-align: center;
+                                        overflow: hidden;
+                                        text-overflow:ellipsis;
+                                        white-space: nowrap;
 
                                     }
                                 }
@@ -545,7 +562,14 @@
                             display: flex;
                             justify-content: space-between;
                             border-bottom: 1px solid #dcdcdc29;
-
+                            .dayBox_name{
+                                width: 7rem;
+                                text-align: right;
+                                font-size: 0.4rem;
+                                font-family: Source Han Sans CN;
+                                font-weight: 400;
+                                color: #999999;
+                            }
                             .title {
                                 color: #333333;
                                 font-size: 0.4rem;
@@ -838,7 +862,7 @@
                 font-family: Source Han Sans CN;
                 font-weight: 400;
                 position: fixed;
-                z-index: 9999;
+                z-index: 8;
                 bottom: 0;
                 width: 100%;
                 background: #fff;
