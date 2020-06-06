@@ -1,7 +1,7 @@
 <template>
     <div>
         <!--  弹出产品选择  -->
-        <div class="pull-pr" v-if="guanbiprs" @touchmove.prevent>
+        <div class="pull-pr" v-if="guanbiprs" >
             <div class="prBox">
                 <div class="title">
                     <div class="ti-headline">

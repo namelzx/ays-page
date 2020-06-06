@@ -15,13 +15,13 @@
             :src="props.active ? icon.active : icon.normal"
             >
         </van-tabbar-item>
-        <van-tabbar-item @click="handelUrl('/quality')">
+        <van-tabbar-item to="/quality">
             <span>质保卡</span>
             <img
             class="icon2"
             slot="icon"
             slot-scope="props"
-            :src="props.active ? icon.active1 : icon.normal1"
+            :src="props.active ? icon.active3 : icon.normal3"
             >
         </van-tabbar-item>
         <van-tabbar-item to="/my">
@@ -48,18 +48,18 @@
           icon: {
             normal: require("../assets/order-nor.png"),
             active: require('../assets/order-pro.png'),
-            normal1: require('../assets/quality-nor.png'),
-            active1: require('../assets/quality-pro.png'),
+            normal3: require('../assets/quality-nor.png'),
+            active3: require('../assets/quality-pro.png'),
             normal2: require('../assets/my-nor.png'),
             active2: require('../assets/my-pro.png')
           },
       }
   },
     methods:{
-        handelUrl(url){
-            this.$router.push(url)
-            // Toast('此板块暂未开放')
-        }
+        // handelUrl(url){
+        //     this.$router.push(url)
+        //     // Toast('此板块暂未开放')
+        // }
     },
 }
 </script>

@@ -1,8 +1,6 @@
 <template>
     <div class="Quality">
         <div class="Qualityhe">
-
-
             <!-- 数据列表   -->
             <div v-if="Qualitylist!==''">
                 <Qualitylist :list="list"/>
@@ -47,7 +45,7 @@
         methods: {
             getlist(){
               GetUserbyList(this.userInfo.id).then(res=>{
-                  console.log(res)
+                  // console.log(res)
                   this.list=res.data
               })
             },

@@ -37,13 +37,13 @@
                     <div class="select-day">
                         <div class="dayBox">
                             <div class="title">质保编码：</div>
-                            <input disabled v-model="temp.code" placeholder="123456"/>
+                            <div disabled v-model="temp.code" placeholder="123456"/>
                         </div>
                     </div>
                     <div class="select-day">
                         <div class="dayBox">
                             <div class="title">质保期：</div>
-                            <input v-model="temp.codeday" placeholder="365天"/>
+                            <input disabled v-model="temp.codeday" placeholder=""/>
                         </div>
                     </div>
 
@@ -171,8 +171,8 @@
 
             <!-- 取消 确认添加  -->
             <div class="Qu-Btn">
-                <span class="btn-cancel" @click="tolast">取消</span>
-                <span class="btn-okadd" @click="toqusucee">确认添加</span>
+                <div class="btn-cancel" @click="tolast">取消</div>
+                <div class="btn-okadd" @click="toqusucee">确认添加</div>
             </div>
         </div>
 
@@ -585,6 +585,7 @@
                                 font-size: 0.4rem;
                                 font-family: Source Han Sans CN;
                                 font-weight: 400;
+                                background-color: #ffffff;
                             }
                         }
                     }
@@ -856,21 +857,23 @@
 
             .Qu-Btn {
                 display: flex;
-                justify-content: space-between;
-                margin: .6rem auto;
+                justify-content: center;
+                margin: .6rem auto 0;
                 font-size: 0.4rem;
                 font-family: Source Han Sans CN;
                 font-weight: 400;
                 position: fixed;
                 z-index: 8;
+                left: 0;
+                right: 0;
                 bottom: 0;
                 width: 100%;
                 background: #fff;
-                margin-bottom: 0;
                 padding-bottom: 10px;
+                padding-top: .3rem;
 
                 span {
-                    display: inline-block;
+                    display: block;
                 }
 
                 .btn-cancel {
@@ -881,6 +884,7 @@
                     border-radius: 1rem;
                     text-align: center;
                     color: rgba(233, 55, 91, 1);
+                    margin-right: 1rem;
                 }
 
                 .btn-okadd {
