@@ -29,7 +29,7 @@
                     <img src="@/assets/icon_fatuwen.png">
                     <div class="name">发图文</div>
                 </div>
-                <div class="base_waro_list" @click="toggleRetun()">
+                <div class="base_waro_list" @click="toggleVideo()">
                     <img src="@/assets/icon_fashiping.png">
                     <div class="name">发视频</div>
                 </div>
@@ -89,15 +89,19 @@
             toggleRecoed() {
                 this.$router.push('/imagetext/record')
             },
-            toggleRetun() {
-                this.$router.go(-1);//返回上一层
-            },
+
             //搜索结果
             toggleSeeklist() {
                 this.$router.push('/imagetext/seeklist')
             },
+            toggleVideo(){
+                this.$router.push('/upload')
+
+            },
             toggleRetun() {
                 this.$router.push('/case')
+
+                // this.$router.push('/upload')
             }
         }
     }

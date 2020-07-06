@@ -42,6 +42,7 @@
 import Toptitle from "@/components/Toptitle/Toptitle";
 import axios from 'axios'
 import {GetShopIdByInfo} from "@/api/shop";
+import aliOss from "../../utils/aliOss";
 
 import myconfig from "@/config";
 import {getUser, removeUser, setUser} from '@/utils/auth'
@@ -50,7 +51,6 @@ import {getInfo, login} from '@/api/user'
 import { Toast } from 'vant';
 import {mapGetters} from "vuex";
 import { Popup ,Loading} from 'vant';
-
 export default {
   name: "Voucher",
   data() {
@@ -105,19 +105,12 @@ export default {
   methods: {
       afterRead(file) {
         this.show=true
-          let url = myconfig.uploadUrl.img
-          let fd = new FormData()
-          fd.append('file', file.file)
-          axios.post(url, fd, {
-              headers: {
-                  'Content-Type': 'multipart/form-data'
-              }
-          }).then(res => {
-            this.show=false
-              this.postFrom.credentials=res.data.data
-          }).catch(err => {
-              alert(err)
-          })
+        const op=aliOss.ossUploadFile(file)
+        op.then(res=>{
+          this.show=false
+          this.postFrom.credentials=myconfig.oss_url+ res.url
+        })
+
       },
     toggleRetun() {
       this.$router.go(-1);//返回上一层

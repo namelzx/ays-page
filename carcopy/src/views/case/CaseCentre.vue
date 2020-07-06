@@ -13,7 +13,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.assembly" :after-read="afterRead('assembly')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -30,7 +30,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.vehiclebreaking" :after-read="afterRead('vehiclebreaking')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -47,7 +47,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.coating" :after-read="afterRead('coating')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -64,7 +64,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.open_assembly" :after-read="afterRead('open_assembly')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -81,7 +81,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple max-count="1">
+                            <van-uploader v-model="temp.gelresin" :after-read="afterRead('gelresin')" multiple max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -98,7 +98,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.lens" :after-read="afterRead('lens')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -115,7 +115,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.situdimming" :after-read="afterRead('situdimming')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -132,7 +132,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.inject_glue" :after-read="afterRead('inject_glue')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -149,7 +149,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.truck_loading" :after-read="afterRead(temp.truck_loading)" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -166,7 +166,7 @@
                     <div class="example-module">
                         <div class="module_x">*</div>
                         <div class="module_tu">
-                            <van-uploader v-model="fileList" :after-read="afterRead" multiple :max-count="1">
+                            <van-uploader v-model="temp.other_tow" :after-read="afterRead('other_tow')" multiple :max-count="1">
                                 <div class="tu_box">
                                     <van-icon name="plus" />
                                 </div>
@@ -186,7 +186,7 @@
         <div class="operation">
             <div class="operation_warp">
                 <div class="lan-s" @click="toggleback">上一步</div>
-                <div class="lan-z">保存</div>
+                <div class="lan-z" @click="handleSave">保存</div>
                 <div class="lan" @click="toggleNext">下一步</div>
             </div>
 
@@ -195,10 +195,30 @@
 </template>
 
 <script>
+    import aliOss from "../../utils/aliOss";
+    import myconfig from "@/config";
+    import { PostAddByData,GetInfoById} from '@/api/marketing'
+    import {mapGetters} from 'vuex'
+
     export default {
         name: "Case",
+        computed: {
+            ...mapGetters(["userInfo", "sele_shop"])
+        },
         data(){
             return{
+                temp:{
+                    assembly:[],
+                    vehiclebreaking:[],
+                    coating:[],
+                    open_assembly:[],
+                    gelresin:[],
+                    lens:[],
+                    situdimming:[],
+                    inject_glue:[],
+                    truck_loading:[],
+                    other_tow:[],
+                },
                 fileList: [
                     { url: 'https://img.yzcdn.cn/vant/leaf.jpg' },
                     // Uploader 根据文件后缀来判断是否为图片文件
@@ -211,18 +231,179 @@
                 // }
             }
         },
+        created() {
+            GetInfoById(this.userInfo.id).then(res=>{
+                let data=res.data
+                if(res.data.assembly!==null){
+                    this.temp.assembly.push({url:res.data.assembly})
+                    this.temp.vehiclebreaking.push({url:res.data.vehiclebreaking})
+                    this.temp.coating.push({url:res.data.coating})
+                    this.temp.open_assembly.push({url:res.data.open_assembly})
+                    this.temp.gelresin.push({url:res.data.gelresin})
+
+                    this.temp.lens.push({url:res.data.lens})
+                    this.temp.situdimming.push({url:res.data.situdimming})
+                    this.temp.inject_glue.push({url:res.data.inject_glue})
+                    this.temp.truck_loading.push({url:res.data.truck_loading})
+                    this.temp.other_tow.push({url:res.data.other_tow})
+                }
+            })
+        },
         methods:{
-            afterRead(file) {
-                // 此时可以自行将文件上传至服务器
-                console.log(file);
+
+            handleSave() {
+                if (this.temp.assembly.length === 0) {
+                    this.$toast('总成未上传');
+                    return
+                }
+                if (this.temp.vehiclebreaking.length === 0) {
+                    this.$toast('拆车后未上传');
+                    return
+                }
+                if (this.temp.coating.length === 0) {
+                    this.$toast('总成覆膜图未上传');
+                    return
+                }
+
+                if (this.temp.open_assembly.length === 0) {
+                    this.$toast('开总成图未上传');
+                    return
+                }
+
+
+
+                if (this.temp.gelresin.length === 0) {
+                    this.$toast('清胶图未上传');
+                    return
+                }
+                if (this.temp.lens.length === 0) {
+                    this.$toast('透镜安装未上传');
+                    return
+                }
+                if (this.temp.situdimming.length === 0) {
+                    this.$toast('原位调光图未上传');
+                    return
+                }
+
+                if (this.temp.inject_glue.length === 0) {
+                    this.$toast('注胶过程图未上传');
+                    return
+                }
+                if (this.temp.truck_loading.length === 0) {
+                    this.$toast('装车图未上传');
+                    return
+                }
+
+
+
+                var temp = {
+                    assembly: this.temp.assembly[0].url,
+                    vehiclebreaking: this.temp.vehiclebreaking[0].url,
+                    coating:  this.temp.coating[0].url,
+                    open_assembly: this.temp.open_assembly[0].url,
+                    gelresin: this.temp.gelresin[0].url,
+                    lens: this.temp.lens[0].url,
+                    situdimming: this.temp.situdimming[0].url,
+                    inject_glue: this.temp.inject_glue[0].url,
+                    truck_loading: this.temp.truck_loading[0].url,
+                    other_tow: '',
+                };
+                if (this.temp.other_tow.length > 0) {
+                    temp.other_tow = this.temp.other_tow[0].url
+                }
+                console.log(temp)
+                temp.user_id=this.userInfo.id
+                temp.status = 3;
+                PostAddByData(temp).then(res=>{
+                    this.$toast('保存成功');
+                })
+            },
+            afterRead(field) {
+                var that = this;
+                let obj = that.temp;
+                return file => {
+                    const op = aliOss.ossUploadFile(file)
+                    op.then(res => {
+                        obj[field] = [{url: myconfig.oss_url + res.url}]
+                        that.temp = obj
+                        console.log(that.temp)
+                    })
+
+                };
             },
             toggleback(){
                 this.$router.go(-1)
             },
             toggleNext(){
-                this.$router.push({
-                    path:'/caseover'
+
+                if (this.temp.assembly.length === 0) {
+                    this.$toast('总成未上传');
+                    return
+                }
+                if (this.temp.vehiclebreaking.length === 0) {
+                    this.$toast('拆车后未上传');
+                    return
+                }
+                if (this.temp.coating.length === 0) {
+                    this.$toast('总成覆膜图未上传');
+                    return
+                }
+
+                if (this.temp.open_assembly.length === 0) {
+                    this.$toast('开总成图未上传');
+                    return
+                }
+
+
+
+                if (this.temp.gelresin.length === 0) {
+                    this.$toast('清胶图未上传');
+                    return
+                }
+                if (this.temp.lens.length === 0) {
+                    this.$toast('透镜安装未上传');
+                    return
+                }
+                if (this.temp.situdimming.length === 0) {
+                    this.$toast('原位调光图未上传');
+                    return
+                }
+
+                if (this.temp.inject_glue.length === 0) {
+                    this.$toast('注胶过程图未上传');
+                    return
+                }
+                if (this.temp.truck_loading.length === 0) {
+                    this.$toast('装车图未上传');
+                    return
+                }
+
+
+
+                var temp = {
+                    assembly: this.temp.assembly[0].url,
+                    vehiclebreaking: this.temp.vehiclebreaking[0].url,
+                    coating:  this.temp.coating[0].url,
+                    open_assembly: this.temp.open_assembly[0].url,
+                    gelresin: this.temp.gelresin[0].url,
+                    lens: this.temp.lens[0].url,
+                    situdimming: this.temp.situdimming[0].url,
+                    inject_glue: this.temp.inject_glue[0].url,
+                    truck_loading: this.temp.truck_loading[0].url,
+                    other_tow: '',
+                };
+                if (this.temp.other_tow.length > 0) {
+                    temp.other_tow = this.temp.other_tow[0].url
+                }
+                console.log(temp)
+                temp.user_id=this.userInfo.id
+                temp.status = 3;
+                PostAddByData(temp).then(res=>{
+                    this.$router.push({
+                        path:'/caseover'
+                    })
                 })
+
             }
         }
     }

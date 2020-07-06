@@ -1,5 +1,9 @@
 <template>
   <div class="voucher">
+    <van-popup v-model="show">
+      <van-loading size="24px">上传中...</van-loading>
+
+    </van-popup>
     <div @click="toggleRetun">
       <Toptitle :title="title" />
     </div>
@@ -41,11 +45,13 @@
     import myconfig from "@/config";
     import {getUser, removeUser, setUser} from '@/utils/auth'
     import {GetIdBydetails,PostNoteByAdd,GetIdByStatus} from "@/api/order";
+    import aliOss from "../../utils/aliOss";
 
     export default {
         name: "Voucher",
         data() {
             return {
+              show:false,
                 title: "确认核销",
                 fileList: [],
                 postFrom:{
@@ -70,18 +76,12 @@
         },
         methods: {
             afterRead(file) {
-                let url = myconfig.uploadUrl.img
-                let fd = new FormData()
-                fd.append('file', file.file)
-                axios.post(url, fd, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(res => {
-                    this.postFrom.credentials=res.data.data
-                }).catch(err => {
-                    alert(err)
-                })
+              this.show=true
+              const op=aliOss.ossUploadFile(file)
+              op.then(res=>{
+                this.show=false
+                this.postFrom.credentials=myconfig.oss_url+ res.url
+              })
             },
             toggleRetun() {
                 this.$router.go(-1);//返回上一层

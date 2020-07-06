@@ -8,10 +8,8 @@ export default {
 
     // 配置显示在浏览器标签的title
     title: '安亿士-后台',
-    oss_url: 'https://j-code.oss-cn-hangzhou.aliyuncs.com/',
-
+    oss_url: 'http://pdpt.oss-cn-beijing.aliyuncs.com/',
     url_href: 'http://localhost:8081/', //前端地址
-
     // token在Cookie中存储的天数，默认1天
     cookieExpires: 1,
 

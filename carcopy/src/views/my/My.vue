@@ -13,6 +13,10 @@
                 <div>钱包</div>
                 <div class="car-icon"><img src="@/assets/you.png"/></div>
             </div>
+            <div class="my-car" @click="toggleDatum" v-if="userInfo.role_tyoe===1">
+                <div>账号管理</div>
+                <div class="car-icon"><img src="@/assets/you.png"/></div>
+            </div>
 
             <van-cell-group v-if="userInfo.role_tyoe===2">
                 <van-cell v-for="(item,index) in list" :title="item.shopname"/>

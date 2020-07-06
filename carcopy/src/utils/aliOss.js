@@ -28,9 +28,9 @@ export default {
         return new Promise((resolve, reject) => {
             let client = new OSS({
                 region: 'oss-cn-beijing',
-                accessKeyId: 'LTAI4G7m7lF5SkXU',
-                accessKeySecret: 'PbcsuZTY2CMVPjr1K2DGzMejeotVTI',
-                bucket: 'kedand'
+                accessKeyId: 'LTAI4Fv5YWahb56AEHRgoYWj',
+                accessKeySecret: '3XW1mDjKv9BeSQnNm3gAtw7ZSuzFQO',
+                bucket: 'pdpt'
             })
             resolve(client)
         })
@@ -59,7 +59,7 @@ export default {
                         let e = {}
                         e.percent = Math.floor(p * 100)
                         // console.log('Progress: ' + p)
-                        option.onProgress(e)
+                        // option.onProgress(e)
                     }
                 }).then((val) => {
                     resolve({
@@ -67,13 +67,12 @@ export default {
                         url: val.name
                     })
                     if (val.res.statusCode === 200) {
-                        option.onSuccess(val)
                         return val
                     } else {
                         option.onError('上传失败')
                     }
                 }, err => {
-                    option.onError('上传失败')
+                    console.log(err)
                     reject(err)
                 })
             })
