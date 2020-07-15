@@ -3,7 +3,7 @@
         <!--   输入框内容      -->
         <div class="seek_top">
             <div class="marketing_seek">
-                <img src="@/assets/return.png" @click="toggleRetun()">
+                <img src="@/assets/return.png" @click="toHome()">
                 <div class="seek_toggle" @click="toggleSeeklist">输入关键字</div>
             </div>
         </div>
@@ -43,11 +43,18 @@
 </template>
 
 <script>
+    import {GetImagesTextItmeByWhere} from '@/api/marketing'
+
     import list from './../component/Marketinglist'
     export default {
         name: "index",
         data() {
             return {
+                listQuery: {
+                    limit: 20,
+                    page: 1,
+                    name: "",
+                },
                 imglist: [
                     'https://kedand.oss-cn-beijing.aliyuncs.com/uploads/cover.png',
                     'https://kedand.oss-cn-beijing.aliyuncs.com/uploads/cover.png',
@@ -84,10 +91,18 @@
         components: {
             list
         },
+        created() {
+            this.getlist();
+        },
         methods:{
             //记录
             toggleRecoed() {
                 this.$router.push('/imagetext/record')
+            },
+            getlist() {
+                GetImagesTextItmeByWhere(this.listQuery).then(res=>{
+                    this.list=res.data.data
+                })
             },
 
             //搜索结果
@@ -99,10 +114,11 @@
 
             },
             toggleRetun() {
-                this.$router.push('/case')
-
-                // this.$router.push('/upload')
-            }
+                this.$router.push('/Upimages')
+            },
+            toHome(){
+                this.$router.push('/')
+            },
         }
     }
 </script>

@@ -124,6 +124,7 @@
         data() {
             return {
                 temp: {
+                    order_id:undefined,
                     front: [],
                     distance_light_qt: [],//远光
                     passing_light_qt: [],//近光
@@ -146,6 +147,7 @@
         },
         created() {
             console.log(this.userInfo,this.sele_shop)
+            this.temp.order_id=this.$route.query.id
             GetInfoById(this.userInfo.id).then(res=>{
                 let data=res.data
                 if(res.data!==null){
@@ -204,6 +206,7 @@
                     distance_light_qt: this.temp.distance_light_qt[0].url,
                     front: this.temp.front[0].url,
                     other_one: '',
+                    order_id:this.temp.order_id,
                     passing_light_qt: this.temp.passing_light_qt[0].url,
                     product: this.temp.product[0].url,
                 };
@@ -212,6 +215,8 @@
                 }
                 temp.user_id=this.userInfo.id
                 temp.status = 3;
+                temp.order_id=this.$route.query.id
+                console.log(temp.order_id)
                 PostAddByData(temp).then(res=>{
                     console.log(res)
                     this.$toast('保存成功');
@@ -249,6 +254,7 @@
                 }
                 temp.user_id=this.userInfo.id
                 temp.status = 3;
+                temp.order_id=this.$route.query.id
                 PostAddByData(temp).then(res=>{
                     this.$router.push({
                         path: '/casecentre'

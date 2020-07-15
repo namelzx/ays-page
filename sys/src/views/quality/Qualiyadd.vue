@@ -8,7 +8,7 @@
 
             <div class="qu-coding">
                 <div class="coding-title">质保编码</div>
-                <input placeholder="请输入编码" v-model="value" />
+                <input placeholder="请输入编码" type="number" v-model="value" />
             </div>
             <div class="qu-hint" v-if="show_error">
                 <span>错误提示</span>

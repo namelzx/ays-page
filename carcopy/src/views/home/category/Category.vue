@@ -20,27 +20,27 @@ background-size: cover;"
       <p class="cate-eng">COUPON</p>
     </div>
 
-    <div
-      class="category-item"
-      style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/official.png');background-position: center;
-background-size: cover;"
-      v-if="userInfo.role_tyoe===1"
-      @click="goToDetail('/imagetext')"
-    >
-      <p class="cate-title">图文案例</p>
-      <p class="cate-eng">CASE</p>
-    </div>
+<!--    <div-->
+<!--      class="category-item"-->
+<!--      style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/official.png');background-position: center;-->
+<!--background-size: cover;"-->
+<!--      v-if="userInfo.role_tyoe===1"-->
+<!--      @click="goToDetail('/imagetext')"-->
+<!--    >-->
+<!--      <p class="cate-title">图文案例</p>-->
+<!--      <p class="cate-eng">CASE</p>-->
+<!--    </div>-->
 
-    <div
-      class="category-item"
-      style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/upload%402x.png');background-position: center;
-background-size: cover;"
-       v-if="userInfo.role_tyoe===1"
-      @click="goToDetail('/upload')"
-    >
-      <p class="cate-title">视频案例</p>
-      <p class="cate-eng">VIDEO UPLOAD</p>
-    </div>
+<!--    <div-->
+<!--      class="category-item"-->
+<!--      style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/upload%402x.png');background-position: center;-->
+<!--background-size: cover;"-->
+<!--       v-if="userInfo.role_tyoe===1"-->
+<!--      @click="goToDetail('/upload')"-->
+<!--    >-->
+<!--      <p class="cate-title">视频案例</p>-->
+<!--      <p class="cate-eng">VIDEO UPLOAD</p>-->
+<!--    </div>-->
     <div
       class="category-item"
       style="background: url('https://kedand.oss-cn-beijing.aliyuncs.com/uploads/slip.png');background-position: center;

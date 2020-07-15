@@ -13,7 +13,15 @@ export function GetInfoById(user_id) {
     return request({
         url: '/Marketing/GetInfoById',
         method: 'get',
-        params:{user_id}
+        params: {user_id}
+    })
+}
+
+export function GetImagesTextItmeByWhere(query) {
+    return request({
+        url: '/Marketing/GetImagesTextItmeByWhere',
+        method: 'get',
+        params: query
     })
 }
 

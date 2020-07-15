@@ -26,14 +26,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 购买日期  -->
-                    <div class="select-day">
-                        <div class="dayBox">
-                            <div class="title">购买日期</div>
-<!--                            <input v-model="temp.buytime" @click="showTI" placeholder="如：2019-9-15"/>-->
-                            <div class="dayBox_name" @click="showTI">{{temp.buytime}}</div>
-                        </div>
-                    </div>
+
                     <div class="select-day">
                         <div class="dayBox">
                             <div class="title">质保编码：</div>
@@ -43,7 +36,7 @@
                     <div class="select-day">
                         <div class="dayBox">
                             <div class="title">质保期：</div>
-                            <input v-model="temp.codeday" placeholder="365天"/>
+                            <input v-model="temp.codeday" disabled placeholder="365天"/>
                         </div>
                     </div>
 
@@ -374,6 +367,7 @@
             updateRow(row) {
                 this.temp.product_title = row.title
                 this.temp.product_id = row.pid
+                this.temp.codeday=row.quality_time
                 console.log(this.temp)
             },
             handelProduct() {
@@ -422,6 +416,73 @@
 
             //添加成功，跳转成功页面
             toqusucee() {
+
+                if(this.temp.product_id==undefined||this.temp.product_id==null||this.temp.product_id==''){
+                    this.$toast('所选产品必选')
+                    this.is_post=false
+                    return;
+                }
+
+                if(this.temp.code==undefined||this.temp.code==null||this.temp.code==''){
+                    this.$toast('质保码必填')
+                    this.is_post=false
+                    return;
+                }
+                if(this.temp.model_id==undefined||this.temp.model_id==null||this.temp.model_id==''){
+                    this.$toast('车型必填')
+                    this.is_post=false
+                    return;
+                }
+                if(this.temp.provincial==undefined||this.temp.provincial==null||this.temp.provincial==''){
+                    this.$toast('省份必填')
+                    return;
+                }
+
+                if(this.temp.plate_numer==undefined||this.temp.plate_numer==null||this.temp.plate_numer==''){
+                    this.$toast('车牌号必填')
+                    this.is_post=false
+                    return;
+                }
+
+                if(this.temp.user==undefined||this.temp.user==null||this.temp.user==''){
+                    this.$toast('车主姓名必填')
+                    this.is_post=false
+                    return;
+                }
+
+                if(this.temp.user_phone==undefined||this.temp.user_phone==null||this.temp.user_phone==''){
+                    this.$toast('车主电话必填')
+                    this.is_post=false
+                    return;
+                }
+
+                if(this.temp.user_address==undefined||this.temp.user_address==null||this.temp.user_address==''){
+                    this.$toast('车主地址必填')
+                    this.is_post=false
+                    return;
+                }
+
+                if(this.temp.user_city_code==undefined||this.temp.user_city_code==null||this.temp.user_city_code==''){
+                    this.$toast('地址编码必填')
+                    this.is_post=false
+                    return;
+                }
+
+                if(this.temp.shop_user==undefined||this.temp.shop_user==null||this.temp.shop_user==''){
+                    this.$toast('店名必填')
+                    this.is_post=false
+                    return;
+                }
+                if(this.temp.shop_phone==undefined||this.temp.shop_phone==null||this.temp.shop_phone==''){
+                    this.$toast('店名必填')
+                    this.is_post=false
+                    return;
+                }
+                if(this.temp.shop_address==undefined||this.temp.shop_address==null||this.temp.shop_address==''){
+                    this.$toast('门店地址必填')
+                    this.is_post=false
+                    return;
+                }
                 if (this.is_post) {
                     return
                 }
@@ -430,7 +491,6 @@
                 PostDataByAdd(this.temp).then(res => {
                     if (res.code === 10001) {
                         this.$toast(res.msg)
-                        this.$router.push({path: "/quality"});
                         return;
                     }
                     this.is_post = false

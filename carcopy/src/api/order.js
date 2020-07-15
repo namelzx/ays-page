@@ -9,8 +9,6 @@ export function GetDataByList(query) {
     })
 }
 
-
-
 export function GetIdBydetails(id) {
     return request({
         url: '/Order/GetIdBydetails',
@@ -50,6 +48,14 @@ export function GetIdBy2DayOrder(query) {
         method: 'get',
         params:query
 
+    })
+}
+
+export function GetIdBy2DayImagesOrder(query) {
+    return request({
+        url: 'Order/GetIdBy2DayImagesOrder',
+        method: 'get',
+        params:query
     })
 }
 

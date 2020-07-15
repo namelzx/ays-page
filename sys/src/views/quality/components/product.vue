@@ -104,7 +104,8 @@
                 this.closepr();
                 let temp={
                     title:this.brand+'-'+this.zbrand,
-                    pid:this.pid
+                    pid:this.pid,
+                    quality_time:row.quality_time
                 }
                 this.$emit('updateRow',temp)
                 this.zbrand="请选择"

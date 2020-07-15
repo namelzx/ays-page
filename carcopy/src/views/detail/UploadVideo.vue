@@ -26,7 +26,7 @@
             <!--<div class="confirm-upload" @click="clickToUpload">确认上传视频</div>-->
         </div>
 
-        <van-overlay :show="show" >
+        <van-overlay :show="show">
             <van-loading size="24px">上传中</van-loading>
 
         </van-overlay>
@@ -45,10 +45,12 @@
     import Toptitle from "@/components/Toptitle/Toptitle";
     import myconfig from "@/config";
     import axios from 'axios'
-    import {Toast,Loading,Overlay} from 'vant';
+    import {Toast, Loading, Overlay} from 'vant';
 
     import {PostDataByVideo} from "@/api/order";
 
+
+    import aliOss from "../../utils/aliOss";
 
     export default {
         name: "UploadVideo",
@@ -58,7 +60,7 @@
                 index: undefined,
                 list: [],
                 id: undefined,
-                show:false
+                show: false
             }
         },
         created() {
@@ -78,7 +80,7 @@
             },
             // 返回布尔值
             beforeRead(file) {
-                this.show=true
+                this.show = true
                 // if (file.type !== 'image/jpeg') {
                 //     Toast('请上传 jpg 格式图片');
                 //     return false;
@@ -86,22 +88,32 @@
                 return true;
             },
             afterRead(file) {
-                let url = myconfig.uploadUrl.img
-                let fd = new FormData()
-                fd.append('file', file.file)
-                axios.post(url, fd, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then(res => {
+                // let url = myconfig.uploadUrl.img
+                // let fd = new FormData()
+                // fd.append('file', file.file)
+                // axios.post(url, fd, {
+                //     headers: {
+                //         'Content-Type': 'multipart/form-data'
+                //     }
+                // }).then(res => {
+                //     var arr = this.list
+                //     arr[this.index].url = res.data.data
+                //     this.list = arr
+                //     this.show=false
+                // }).catch(err => {
+                //     alert(err)
+                // })
 
+                const op = aliOss.ossUploadFile(file)
+                op.then(res => {
                     var arr = this.list
-                    arr[this.index].url = res.data.data
+                    arr[this.index].url =  myconfig.oss_url + res.url
                     this.list = arr
-                    this.show=false
-                }).catch(err => {
-                    alert(err)
+                    console.log(this.list)
+                    this.show = false
                 })
+
+
             },
             clickToUpload() {
 
@@ -115,7 +127,7 @@
                     order_id: this.id,
                     video: this.list
                 }
-                PostDataByVideo(temp).then(res=>{
+                PostDataByVideo(temp).then(res => {
                     this.$router.push({path: '/upload-succ'})
 
                 })
@@ -126,8 +138,7 @@
             },
             toggleAdd() {
                 if (this.list.length === 5) {
-                }
-                else {
+                } else {
                     this.list.push({
                         order_id: this.id,
                         url: '3'
@@ -144,12 +155,13 @@
 
 <style lang="stylus" scoped>
 
-    .fixed{
+    .fixed {
         line-height: 1.09rem;
         /* background: #e9375b; */
         border-radius: 1rem;
         font-family: Source Han Sans CN;
-        .turn{
+
+        .turn {
             /* width: 8.7rem; */
             height: 1.01rem;
             margin: 0.6rem auto;
@@ -177,7 +189,8 @@
             padding-top: 0.266667rem;
             padding-bottom: 0.266667rem;
             border-top: 0.026667rem solid #ebeef5;
-            .have-btn{
+
+            .have-btn {
                 margin: 0 auto 0.5rem;
                 text-align: center;
                 color: #fff;
@@ -201,6 +214,7 @@
             }
         }
     }
+
     .order-wrap {
         position: absolute;
         min-height: 200px;
@@ -287,7 +301,8 @@
         background: rgba(234, 55, 86, 1);
         border-radius: 1rem;
     }
-    .van-loading{
+
+    .van-loading {
         display: flex;
         flex-direction: row;
         align-items: center;

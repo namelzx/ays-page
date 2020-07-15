@@ -1,16 +1,19 @@
 <template>
     <!--   瀑布流     -->
     <div class="marketing_warp">
-        <div class="mar_item" v-for="(item,index) in list" :key="index" @click="toggleCase(item.type,item.video,item.desc)">
-            <img v-if="item.type==1" :src="item.image_url" />
-            <video v-else :src="item.video" controls="controls">
-            </video>
+        <div class="mar_item" v-for="(item,index) in list" :key="index" >
+            <img v-if="item.type=='图文'" @click="toggleCase(item.type,item.video,item.desc)" :src="item.imagetext.assembly" />
+           <div  class="mb"  v-else  >
+            <div class="ma" @click="toggleCase(item.type,item.video,item.totitle)"></div>
+               <video  class="mc"  :src="item.video[0].url" controls="controls">
+               </video>
+           </div>
             <div class="mar_item_desc">{{item.desc}}</div>
         </div>
 
         <!--   视频弹窗     -->
         <div class="keep" v-if="show">
-            <video  :src="video" controls="controls"></video>
+            <video  :src="video[0].url" controls="controls"></video>
             <div    class="desc">#{{desc}}</div>
             <img @click.stop="clickClose"  src="@/assets/close.png"/>
         </div>
@@ -36,11 +39,11 @@ export default {
     },
     methods:{
         toggleCase(type,video,desc){
-            if(type==1){
+            if(type=='图文'){
                 // this.$router.push('/imagetext/case')
                 window.location.href = 'http://www.baidu.com';
             }
-            if(type==2){
+            if(type=='视频'){
                 console.log("视频")
                 this.video = video
                 this.desc = desc
@@ -57,6 +60,20 @@ export default {
 
 
 <style lang="stylus" scoped>
+    .mb{
+        .mc{
+            position inherit;
+        }
+        .ma{
+            position inherit;
+            width: 100px;
+            width: 100px;
+            position: fixed;
+            z-index: 99999999999999;
+            width: 4.4rem;
+            height: 8rem;
+        }
+    }
     .marketing_warp{
         width 9.25rem;
         margin .3rem auto;
