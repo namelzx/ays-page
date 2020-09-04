@@ -28,7 +28,7 @@
     "@vue/cli-plugin-vuex": "^4.0.0",
     "@vue/cli-service": "^4.0.0",
     "babel-plugin-transform-modules": "^0.1.1",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "postcss-px2rem": "^0.3.0",
     "sass-loader": "^8.0.0",
     "vue-template-compiler": "^2.6.10"
